@@ -31,10 +31,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	}
 	else
 	{
-		// TODO: code your application's behavior here.
-		CString strHello;
-		strHello.LoadString(IDS_HELLO);
-		cout << (LPCTSTR)strHello << endl;
+		XCODE9
 	}
 
 	return nRetCode;

@@ -13,9 +13,10 @@ using namespace std;
 #define IOCTL_BEEP_SET_PROTECT_FILE	CTL_CODE(FILE_DEVICE_BEEP, 0x12, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 char *buf = NULL;
-DWORD dwSizeXXX = 0;
+DWORD dwSizeXXX = 0,dwBytesInBlock;
 char szXBuff[MAX_PATH] = {0};
 HANDLE hXMod = INVALID_HANDLE_VALUE;
+HANDLE hmyfile,hFileMapping,hmyfilemap;
 char TmpBuf[1 + 64 + 16];
 MD5_CTX md5T;
 unsigned char digest[16];
@@ -43,6 +44,10 @@ HRSRC hSrc;
 HGLOBAL hGlobal;
 LPVOID lp;
 FILE *fd;
+SYSTEM_INFO sinf;
+__int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
+PBYTE pbFile,pbmyFile;
+char AddMsg[]="President Obama's page on Google's social network site has been inundated with messages in Chinese after restrictions in China were removed.";
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -280,6 +285,43 @@ FILE *fd;
 	}\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(8);\
+	}
+
+#define XCODE9 __try{\
+	GetSystemInfo(&sinf);\
+	hXMod = CreateFile(".\\first.txt", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);\
+	hmyfile =CreateFile(".\\second.txt", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);\
+	hFileMapping = CreateFileMapping(hXMod, NULL,PAGE_READONLY, 0, 0, NULL);\
+	qwFileSize = GetFileSize(hXMod, &dwSizeXXX);\
+	qwFileSize += (((__int64) dwSizeXXX) << 32);\
+	myFilesize=qwFileSize+sinf.dwAllocationGranularity;\
+	hmyfilemap = CreateFileMapping(hmyfile, NULL, PAGE_READWRITE,(DWORD)(myFilesize>>32), (DWORD)(myFilesize& 0xFFFFFFFF), NULL);\
+	CloseHandle(hXMod);\
+	CloseHandle(hmyfile);\
+	pbmyFile=(PBYTE) MapViewOfFile(hmyfilemap, FILE_MAP_WRITE, 0, 0, sizeof(AddMsg));\
+	memcpy(pbmyFile,AddMsg,sizeof(AddMsg));\
+	UnmapViewOfFile(pbmyFile);\
+	qwFileOffset = 0;\
+	qwmyFileOffset=sinf.dwAllocationGranularity;\
+	while (qwFileSize > 0)\
+	{\
+		dwBytesInBlock = sinf.dwAllocationGranularity;\
+		if(qwFileSize < sinf.dwAllocationGranularity)\
+			dwBytesInBlock =(DWORD) qwFileSize;\
+		pbFile = (PBYTE) MapViewOfFile(hFileMapping, FILE_MAP_READ,(DWORD)(qwFileOffset >> 32),(DWORD)(qwFileOffset & 0xFFFFFFFF),dwBytesInBlock);\
+		pbmyFile=(PBYTE) MapViewOfFile(hmyfilemap, FILE_MAP_WRITE,(DWORD)(qwmyFileOffset >> 32),(DWORD)(qwmyFileOffset & 0xFFFFFFFF),dwBytesInBlock);\
+		memcpy(pbmyFile,pbFile,dwBytesInBlock);\
+		UnmapViewOfFile(pbFile);\
+		UnmapViewOfFile(pbmyFile);\
+		qwmyFileOffset+=dwBytesInBlock;\
+		qwFileOffset += dwBytesInBlock;\
+		qwFileSize -= dwBytesInBlock;\
+	}\
+	CloseHandle(hFileMapping);\
+	CloseHandle(hmyfilemap);\
+	}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(9);\
 	}
 
 #ifdef FLOWERX
