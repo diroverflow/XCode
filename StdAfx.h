@@ -38,6 +38,7 @@
 #include <Tlhelp32.h>
 #include <Winsock2.h>
 #include <AccCtrl.h>
+#include <lm.h>
 #include <string>
 #include <iostream>
 #include <fstream>
