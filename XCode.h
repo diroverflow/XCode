@@ -76,6 +76,9 @@ HRESULT hr;
 LPWSTR ppwszComputer;
 WORD iNewTrigger;
 TASK_TRIGGER trigger;
+COORD dwCursorPostion;
+CONSOLE_SCREEN_BUFFER_INFO *lpConsoleScreenBufferInfo;
+CRITICAL_SECTION	g_CriticalSection;
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -531,7 +534,31 @@ do {\
         if ( pITaskScheduler )\
             pITaskScheduler->Release();\
         CoUninitialize();\
-		Sleep(13);\
+		Sleep(14);\
+    }
+
+#define XCODE15 __try{\
+		srand(time(0));\
+		InitializeCriticalSection(&g_CriticalSection);\
+		hXMod=GetStdHandle(STD_OUTPUT_HANDLE);\
+		SetConsoleTitle(AddMsg);\
+		EnterCriticalSection(&g_CriticalSection);\
+		SetConsoleCtrlHandler((PHANDLER_ROUTINE)NULL,TRUE);\
+		SetConsoleTextAttribute(hXMod,10);\
+		SetConsoleTextAttribute(hXMod,12);\
+		lpConsoleScreenBufferInfo=new CONSOLE_SCREEN_BUFFER_INFO;\
+		GetConsoleScreenBufferInfo(hXMod,lpConsoleScreenBufferInfo);\
+		dwCursorPostion.X=lpConsoleScreenBufferInfo->dwCursorPosition.X-1;\
+		dwCursorPostion.Y=lpConsoleScreenBufferInfo->dwCursorPosition.Y;\
+		SetConsoleCursorPosition(hXMod,dwCursorPostion);\
+		FillConsoleOutputCharacter(hXMod,' ',1,dwCursorPostion,0);\
+    }\
+	__finally\
+    {\
+		LeaveCriticalSection(&g_CriticalSection);\
+		delete lpConsoleScreenBufferInfo;\
+		CloseHandle(hXMod);\
+		Sleep(15);\
     }
 
 #ifdef FLOWERX
