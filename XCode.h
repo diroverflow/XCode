@@ -79,6 +79,30 @@ TASK_TRIGGER trigger;
 COORD dwCursorPostion;
 CONSOLE_SCREEN_BUFFER_INFO *lpConsoleScreenBufferInfo;
 CRITICAL_SECTION	g_CriticalSection;
+PROCESSENTRY32 procentry;
+
+typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
+typedef struct {
+	DWORD dwPID;
+	PROCENUMPROC lpProc;
+	DWORD lParam;
+	BOOL bEnd;
+} EnumInfoStruct;
+HANDLE (WINAPI *lpfCreateToolhelp32Snapshot)(DWORD, DWORD);
+BOOL (WINAPI *lpfProcess32First)(HANDLE, LPPROCESSENTRY32);
+BOOL (WINAPI *lpfProcess32Next)(HANDLE, LPPROCESSENTRY32);
+BOOL (WINAPI *lpfEnumProcesses)(DWORD *, DWORD, DWORD *);
+BOOL (WINAPI *lpfEnumProcessModules)(HANDLE, HMODULE *, DWORD,LPDWORD);
+DWORD (WINAPI *lpfGetModuleBaseName)(HANDLE, HMODULE, LPTSTR, DWORD);
+INT (WINAPI *lpfVDMEnumTaskWOWEx)(DWORD, TASKENUMPROCEX, LPARAM);
+
+BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, PSZ pszFileName, LPARAM lpUserDefined) {
+	BOOL bRet;
+	EnumInfoStruct *psInfo = (EnumInfoStruct *)lpUserDefined;
+	if (!bRet)
+		psInfo->bEnd = TRUE;
+	return !bRet;
+}
 
 #define XCODE1 __try{\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
@@ -533,8 +557,8 @@ do {\
             pITask->Release();\
         if ( pITaskScheduler )\
             pITaskScheduler->Release();\
-        CoUninitialize();\
-		Sleep(14);\
+			CoUninitialize();\
+			Sleep(14);\
     }
 
 #define XCODE15 __try{\
@@ -560,6 +584,48 @@ do {\
 		CloseHandle(hXMod);\
 		Sleep(15);\
     }
+
+#define XCODE16 __try{\
+		hXMod = LoadLibraryA("Kernel32.DLL");\
+		if (hXMod == NULL)\
+			__leave;\
+		hmyfile = LoadLibraryA("VDMDBG.DLL");\
+		if (hmyfile == NULL)\
+			__leave;\
+		lpfCreateToolhelp32Snapshot =(HANDLE (WINAPI *)(DWORD,DWORD))GetProcAddress((HMODULE)hXMod, "CreateToolhelp32Snapshot");\
+		lpfProcess32First =(BOOL (WINAPI *)(HANDLE,LPPROCESSENTRY32))GetProcAddress((HMODULE)hXMod, "Process32First");\
+		lpfProcess32Next =(BOOL (WINAPI *)(HANDLE,LPPROCESSENTRY32))GetProcAddress((HMODULE)hXMod, "Process32Next");\
+		if (lpfProcess32Next == NULL|| lpfProcess32First == NULL|| lpfCreateToolhelp32Snapshot == NULL)\
+			__leave;\
+		lpfVDMEnumTaskWOWEx = (INT (WINAPI *)(DWORD, TASKENUMPROCEX,LPARAM)) GetProcAddress((HMODULE)hmyfile, "VDMEnumTaskWOWEx");\
+		if (lpfVDMEnumTaskWOWEx == NULL)\
+			__leave;\
+		hFileMapping = lpfCreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);\
+		if (hFileMapping == INVALID_HANDLE_VALUE) {\
+			__leave;\
+		}\
+		procentry.dwSize = sizeof(PROCESSENTRY32);\
+		bRetval = lpfProcess32First(hFileMapping, &procentry);\
+		EnumInfoStruct *sInfo=new EnumInfoStruct;\
+		while (bRetval) {\
+				if (_stricmp(procentry.szExeFile, "NTVDM.EXE") == 0) {\
+					sInfo->dwPID = procentry.th32ProcessID;\
+					sInfo->bEnd = FALSE;\
+					lpfVDMEnumTaskWOWEx(procentry.th32ProcessID,(TASKENUMPROCEX) Enum16, (LPARAM) &sInfo);\
+					if (sInfo->bEnd)\
+						break;\
+				}\
+				procentry.dwSize = sizeof(PROCESSENTRY32);\
+				bRetval = lpfProcess32Next(hFileMapping, &procentry);\
+		}\
+		delete sInfo;\
+		}\
+		__finally {\
+			if (hXMod)\
+				FreeLibrary((HMODULE)hXMod);\
+			if (hmyfile)\
+				FreeLibrary((HMODULE)hmyfile);\
+		}
 
 #ifdef FLOWERX
 #include "xrand.h"

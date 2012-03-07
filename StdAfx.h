@@ -36,6 +36,7 @@
 #include <objidl.h>  
 #include <wchar.h>
 #include <Tlhelp32.h>
+#include <vdmdbg.h>
 #include <Winsock2.h>
 #include <AccCtrl.h>
 #include <lm.h>
