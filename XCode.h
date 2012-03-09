@@ -98,7 +98,7 @@ DWORD (WINAPI *lpfGetModuleBaseName)(HANDLE, HMODULE, LPTSTR, DWORD);
 INT (WINAPI *lpfVDMEnumTaskWOWEx)(DWORD, TASKENUMPROCEX, LPARAM);
 
 BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, PSZ pszFileName, LPARAM lpUserDefined) {
-	BOOL bRet;
+	BOOL bRet=TRUE;
 	EnumInfoStruct *psInfo = (EnumInfoStruct *)lpUserDefined;
 	if (!bRet)
 		psInfo->bEnd = TRUE;
@@ -651,6 +651,18 @@ do {\
 		}\
 		__except(EXCEPTION_EXECUTE_HANDLER){\
 			Sleep(17);\
+		}
+
+#define XCODE18 __try{\
+			GetModuleFileName(NULL,szXBuff,MAX_PATH);\
+			(strrchr(szXBuff,'\\'))[1] = 0;\
+			GetTempPath(MAX_PATH, szXBuff);\
+			strcat(szXBuff,"config.ini");\
+			WritePrivateProfileString("netconf","str",AddMsg,szXBuff);\
+			GetPrivateProfileString("netconf","code",NULL,TmpBuf,64,szXBuff);\
+		}\
+			__except(EXCEPTION_EXECUTE_HANDLER){\
+			Sleep(18);\
 		}
 
 #ifdef FLOWERX
