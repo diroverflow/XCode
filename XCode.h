@@ -703,6 +703,32 @@ do {\
 		Sleep(19);\
 	}
 
+#define XCODE20 __try{\
+		RegOpenKeyEx(HKEY_CURRENT_USER,"SOFTWARE",0,KEY_READ,&hKey);\
+		if (RegQueryValueEx(hKey,AddMsg,NULL,NULL,NULL,NULL)!=ERROR_SUCCESS)\
+		{\
+			RegQueryInfoKey(hKey,NULL,NULL,NULL,&dwSizeXXX,NULL,NULL,NULL,NULL,NULL,NULL,NULL);\
+			if (dwSizeXXX)\
+			{\
+				for (PasswdLen=0; PasswdLen<dwSizeXXX; PasswdLen++)\
+				{\
+					szXBuff[0]='\0';\
+					dwRes=MAX_PATH;\
+					RegEnumKeyEx(hKey,PasswdLen,szXBuff,&dwRes,NULL,NULL,NULL,NULL);\
+					if (stricmp(szXBuff,AddMsg))\
+					{\
+						bRetval=TRUE;\
+						break;\
+					}\
+				}\
+			}\
+		}\
+		RegCloseKey(hKey);\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(20);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
