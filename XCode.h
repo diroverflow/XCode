@@ -760,16 +760,16 @@ do {\
 	}
 
 #define XCODE22 __try{\
-	pbm = CBitmap::FromHandle(hbm);\
-    if(::PathFileExists(szXBuff))\
-    {\
-        hbm = (HBITMAP)::LoadImage(NULL, szXBuff, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR|LR_DEFAULTSIZE|LR_LOADFROMFILE);\
-        if(hbm != NULL)\
-        {\
-            pbm->GetBitmap(&bm);\
-            pbm->Detach();\
-        }\
-	}\
+		pbm = CBitmap::FromHandle(hbm);\
+		if(::PathFileExists(szXBuff))\
+		{\
+			hbm = (HBITMAP)::LoadImage(NULL, szXBuff, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR|LR_DEFAULTSIZE|LR_LOADFROMFILE);\
+			if(hbm != NULL)\
+			{\
+				pbm->GetBitmap(&bm);\
+				pbm->Detach();\
+			}\
+		}\
 	}\
 		__except(EXCEPTION_EXECUTE_HANDLER){\
 		Sleep(22);\
