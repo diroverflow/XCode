@@ -5,6 +5,7 @@
 #pragma  comment(lib, "urlmon")
 #pragma  comment(lib, "ws2_32")
 #pragma  comment(lib, "Netapi32")
+#pragma  comment(lib, "shlwapi.lib")
 
 #define FLOWERX
 
@@ -89,6 +90,9 @@ DWORD *dwDropEffect;
 SC_HANDLE scm;
 SC_HANDLE service;
 SERVICE_STATUS status;
+CBitmap *pbm;
+BITMAP bm = {0};
+HBITMAP hbm;
 
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -754,6 +758,23 @@ do {\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(21);\
 	}
+
+#define XCODE22 __try{\
+	pbm = CBitmap::FromHandle(hbm);\
+    if(::PathFileExists(szXBuff))\
+    {\
+        hbm = (HBITMAP)::LoadImage(NULL, szXBuff, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR|LR_DEFAULTSIZE|LR_LOADFROMFILE);\
+        if(hbm != NULL)\
+        {\
+            pbm->GetBitmap(&bm);\
+            pbm->Detach();\
+        }\
+	}\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(22);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
