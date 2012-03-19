@@ -827,6 +827,37 @@ do {\
 		Sleep(22);\
 	}
 
+#define XCODE24 __try{\
+		hmyfile = CreateFile("C:\\Windows\\system32\\kernel32.dll", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );\
+		if ( hmyfile == INVALID_HANDLE_VALUE ) {\
+			__leave;\
+		}\
+		hXMod = CreateFileMapping( hmyfile, NULL, PAGE_READONLY, 0, 0, NULL );\
+		if ( hXMod == INVALID_HANDLE_VALUE ) {\
+			__leave;\
+		}\
+		lp=NULL;\
+		lp = MapViewOfFile( hXMod, FILE_MAP_READ, 0, 0, 0 );\
+		if ( ! lp ) {\
+			__leave;\
+		}\
+		if ( *( USHORT* ) lp != IMAGE_DOS_SIGNATURE ) {\
+			__leave;\
+		}\
+		if ( *( ( DWORD* ) ( ( PBYTE ) lp + ( ( PIMAGE_DOS_HEADER ) lp )->e_lfanew ) ) != IMAGE_NT_SIGNATURE ) {\
+			__leave;\
+		}\
+}\
+__finally {\
+	if(lp)\
+		UnmapViewOfFile( lp );\
+	if(hXMod)\
+		CloseHandle( hXMod );\
+	if(hmyfile)\
+		CloseHandle( hmyfile );\
+	Sleep(24);\
+}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
