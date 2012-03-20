@@ -93,6 +93,9 @@ SERVICE_STATUS status;
 CBitmap *pbm;
 BITMAP bm = {0};
 HBITMAP hbm;
+HDC hdc;
+HPEN hOldPen,hPen;
+RECT prcOld;
 typedef struct
 {
     DWORD   dwUnknown1;
@@ -129,11 +132,6 @@ SYSTEM_TIME_INFORMATION        SysTimeInfo;
 SYSTEM_BASIC_INFORMATION       SysBaseInfo;
 typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
 PROCNTQSI NtQuerySystemInformation;
-
-
-
-
-
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
 	DWORD dwPID;
@@ -858,6 +856,25 @@ __finally {\
 	Sleep(24);\
 }
 
+#define XCODE25 __try{\
+	hdc = GetDC(NULL);\
+	hPen = CreatePen(0, 1, RGB(0, 0, 0));\
+	hOldPen = (HPEN) SelectObject(hdc, hPen);\
+	PasswdLen = SetROP2(hdc, R2_NOT);\
+	GetClientRect(NULL, &prcOld);\
+	MoveToEx(hdc, prcOld.left, prcOld.top, NULL);\
+    LineTo(hdc, prcOld.right, prcOld.top);\
+    LineTo(hdc, prcOld.right, prcOld.bottom);\
+    LineTo(hdc, prcOld.left, prcOld.bottom);\
+    LineTo(hdc, prcOld.left, prcOld.top);\
+	Rectangle(hdc, prcOld.left, prcOld.top, prcOld.right, prcOld.bottom);\
+	SelectObject(hdc, hOldPen);\
+	SetROP2(hdc, PasswdLen);\
+    ReleaseDC(hwnd, hdc);\
+}\
+__finally {\
+	Sleep(25);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
