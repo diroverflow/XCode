@@ -875,6 +875,16 @@ __finally {\
 __finally {\
 	Sleep(25);\
 }
+
+#define XCODE26 __try{\
+	hwnd = CreateWindowW(L"Static",L"Application",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,NULL,NULL,AfxGetInstanceHandle(),NULL);\
+	ShowWindow(hwnd,SW_HIDE);\
+	UpdateWindow(hwnd);\
+}\
+__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(26);\
+}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
