@@ -96,6 +96,7 @@ HBITMAP hbm;
 HDC hdc;
 HPEN hOldPen,hPen;
 RECT prcOld;
+HICON hIcon;
 typedef struct
 {
     DWORD   dwUnknown1;
@@ -396,7 +397,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 #define XCODE9 __try{\
 	GetSystemInfo(&sinf);\
 	hXMod = CreateFile(".\\first.txt", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);\
-	hmyfile =CreateFile(".\\second.txt", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);\
+	hmyfile =CreateFile("c:\\second.txt", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);\
 	hFileMapping = CreateFileMapping(hXMod, NULL,PAGE_READONLY, 0, 0, NULL);\
 	qwFileSize = GetFileSize(hXMod, &dwSizeXXX);\
 	qwFileSize += (((__int64) dwSizeXXX) << 32);\
@@ -883,6 +884,13 @@ __finally {\
 }\
 __except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(26);\
+}
+
+#define XCODE27 __try{\
+	hIcon = ExtractIcon(AfxGetInstanceHandle(), AddMsg, 0);\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(27);\
 }
 
 #ifdef FLOWERX
