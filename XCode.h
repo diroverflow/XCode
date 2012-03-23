@@ -893,6 +893,13 @@ __except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(27);\
 }
 
+#define XCODE28 __try{\
+	lp=VirtualAlloc(lp,16,MEM_RESERVE,PAGE_READWRITE);\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(28);\
+}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
