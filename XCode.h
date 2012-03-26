@@ -900,6 +900,17 @@ __except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(28);\
 }
 
+#define XCODE29 __try{\
+hXMod=CreateMutex(NULL,TRUE, AddMsg);\
+if(GetLastError()==ERROR_ALREADY_EXISTS)\
+{\
+	hXMod=CreateMutex(NULL,FALSE,"test");\
+}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(29);\
+}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
