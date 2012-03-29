@@ -944,6 +944,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(31);\
 }
+
+#define XCODE32 __try{\
+	::PostThreadMessage(GetCurrentThreadId(), WM_TIMECHANGE, 0, 0);\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(32);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
