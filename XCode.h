@@ -977,6 +977,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(34);\
 }
+
+#define XCODE35 __try{\
+	hXMod=CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, "kernel32.dll", 0, &dwSizeXXX);\
+	if(WAIT_TIMEOUT==WaitForSingleObject(hXMod,200))\
+	{\
+		CloseHandle(hXMod);\
+	}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(35);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
