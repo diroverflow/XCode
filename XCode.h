@@ -67,6 +67,8 @@ SECURITY_ATTRIBUTES sa;
 HBITMAP	hBitmap;
 HBITMAP *hDib;
 POINT pt;
+std::vector<double> aaa;
+std::vector<double>::const_iterator iii;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -987,6 +989,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(35);\
+}
+
+#define XCODE36 __try{\
+    aaa.push_back(1);\
+    aaa.push_back(2);\
+    aaa.push_back(3);\
+    aaa.push_back(4);\
+    aaa.push_back(5);\
+    for(iii=aaa.begin(); iii!=aaa.end(); ++iii){\
+        std::cout<<(*iii)<<std::endl;\
+    }\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(36);\
 }
 #ifdef FLOWERX
 #include "xrand.h"
