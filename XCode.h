@@ -1004,6 +1004,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(36);\
 }
+
+#define XCODE37 __try{\
+	hXMod = GetCurrentProcess();\
+	GetProcessAffinityMask(hXMod, &dwSizeXXX,&dwRes);\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(37);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
