@@ -11,29 +11,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-int filter(unsigned int code, struct _EXCEPTION_POINTERS *ep) {
-	
-	puts("in filter.");
-	
-	if (code == EXCEPTION_ACCESS_VIOLATION) {
-		
-		puts("caught AV as expected.");
-		
-		return EXCEPTION_EXECUTE_HANDLER;
-		
-	}
-	
-	else {
-		
-		puts("didn't catch AV, unexpected.");
-		
-		return EXCEPTION_CONTINUE_SEARCH;
-		
-	};
-	
-}
-
-
 /////////////////////////////////////////////////////////////////////////////
 // The one and only application object
 
@@ -54,7 +31,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	}
 	else
 	{
-		XCODE1
+		XCODE39
 	}
 
 	return nRetCode;

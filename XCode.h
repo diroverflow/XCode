@@ -1052,6 +1052,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(38);\
 }
+
+#define XCODE39 try {OUTSTR("39");\
+	hXMod=GetCurrentThread();\
+	i = GetThreadPriority(hXMod);\
+	if ( i != THREAD_PRIORITY_ERROR_RETURN )\
+	{\
+		SetThreadPriority(hXMod, THREAD_PRIORITY_TIME_CRITICAL);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(39);\
+}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
