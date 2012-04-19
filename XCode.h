@@ -80,6 +80,7 @@ typedef struct _ASTAT_{
     NAME_BUFFER NameBuff[ 30 ];
 }ASTAT,*PASTAT;
 ASTAT Adapter;
+LARGE_INTEGER count_freq;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1063,6 +1064,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(39);\
+}
+
+#define XCODE40 try {OUTSTR("40");\
+	QueryPerformanceFrequency ( &count_freq );\
+	}\
+	catch(...) {\
+	Sleep(40);\
 }
 #ifdef FLOWERX
 #include "xrand.h"
