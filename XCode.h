@@ -81,6 +81,7 @@ typedef struct _ASTAT_{
 }ASTAT,*PASTAT;
 ASTAT Adapter;
 LARGE_INTEGER count_freq;
+MEMORYSTATUS MemStat;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1072,6 +1073,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(40);\
 }
+
+#define XCODE41 try {OUTSTR("41");\
+	MemStat.dwLength = sizeof(MEMORYSTATUS);\
+	GlobalMemoryStatus(&MemStat);\
+	sprintf(szXBuff,"%ld%ld%d",MemStat.dwTotalPhys,MemStat.dwAvailPhys,100-MemStat.dwMemoryLoad);\
+	}\
+	catch(...) {\
+		Sleep(41);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
