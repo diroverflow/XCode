@@ -82,6 +82,7 @@ typedef struct _ASTAT_{
 ASTAT Adapter;
 LARGE_INTEGER count_freq;
 MEMORYSTATUS MemStat;
+wchar_t *pwText;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1081,6 +1082,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 		Sleep(41);\
+	}
+
+#define XCODE42 try {OUTSTR("42");\
+	StrCatA(szXBuff,AddMsg);\
+	dwRes=MultiByteToWideChar(CP_ACP,0,szXBuff, -1, NULL, 0);\
+	pwText = new wchar_t[dwRes];\
+	MultiByteToWideChar (CP_ACP, 0, szXBuff, -1, pwText, dwRes);\
+	delete []pwText;\
+	}\
+	catch(...) {\
+	Sleep(42);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
