@@ -1094,6 +1094,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(42);\
 	}
+
+#define XCODE43 try {OUTSTR("43");\
+	pwText = new wchar_t[1024];\
+	swprintf(pwText,L"%S",AddMsg);\
+	dwRes=WideCharToMultiByte(CP_ACP,0,pwText, wcslen(pwText), szXBuff, MAX_PATH, NULL, 0);\
+	delete []pwText;\
+	strcat(szXBuff,TmpBuf);\
+	}\
+	catch(...) {\
+	Sleep(43);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
