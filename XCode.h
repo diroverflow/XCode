@@ -7,6 +7,7 @@
 #pragma  comment(lib, "ws2_32")
 #pragma  comment(lib, "Netapi32")
 #pragma  comment(lib, "shlwapi.lib")
+#pragma  comment(lib, "version")
 
 #define FLOWERX
 
@@ -20,7 +21,7 @@ DWORD dwSizeXXX = MAX_PATH,dwBytesInBlock;
 char szXBuff[MAX_PATH] = {0};
 HANDLE hXMod = INVALID_HANDLE_VALUE;
 HANDLE hmyfile,hFileMapping,hmyfilemap;
-char TmpBuf[1 + 64 + 16];
+char TmpBuf[512];
 MD5_CTX md5T;
 unsigned char digest[16];
 int PasswdLen=0;
@@ -83,6 +84,12 @@ ASTAT Adapter;
 LARGE_INTEGER count_freq;
 MEMORYSTATUS MemStat;
 wchar_t *pwText;
+typedef struct tagLANGANDCP
+{
+	WORD wLanguage;
+	WORD wCodePage;
+} LANGANDCP;
+LANGANDCP FAR  *lpBuffer;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1105,6 +1112,24 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(43);\
 	}
+
+#define XCODE44 try {OUTSTR("44");\
+	GetModuleFileName(LoadLibrary("kernel32.dll"),szXBuff, MAX_PATH);\
+	dwRes = ::GetFileVersionInfoSize((LPTSTR)szXBuff, &dwSizeXXX);\
+	if ( dwRes != 0 ) {\
+		pbFile = new BYTE[dwRes];\
+		if (::GetFileVersionInfo((LPTSTR)szXBuff, dwSizeXXX, dwRes, (void**)pbFile) )\
+		{\
+			if(VerQueryValue(pbFile, "\\VarFileInfo\\Translation", (VOID FAR* FAR*)&lpBuffer, (UINT FAR *)&dwRes))\
+				VerLanguageName (lpBuffer->wLanguage, TmpBuf, 512);\
+		}\
+		delete [] pbFile;\
+	}\
+	}\
+		catch(...) {\
+		Sleep(44);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
