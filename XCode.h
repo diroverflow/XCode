@@ -90,6 +90,7 @@ typedef struct tagLANGANDCP
 	WORD wCodePage;
 } LANGANDCP;
 LANGANDCP FAR  *lpBuffer;
+WNDPROC wpOrigEditProc;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1135,6 +1136,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(45);\
+	}
+
+#define XCODE46 try {OUTSTR("46");\
+	dwRes = (DWORD)GetWindowLong(GetActiveWindow(), GWL_WNDPROC);\
+	wpOrigEditProc=(WNDPROC)dwRes;\
+	SetWindowLong(GetActiveWindow(), GWL_WNDPROC, (LONG) wpOrigEditProc);\
+	}\
+	catch(...) {\
+	Sleep(46);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
