@@ -91,6 +91,8 @@ typedef struct tagLANGANDCP
 } LANGANDCP;
 LANGANDCP FAR  *lpBuffer;
 WNDPROC wpOrigEditProc;
+FILETIME ft;
+SYSTEMTIME st;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1145,6 +1147,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(46);\
+	}
+
+#define XCODE47 try {OUTSTR("47");\
+		GetSystemTime(&st);\
+		SystemTimeToFileTime(&st, &ft);\
+		GetModuleFileName(NULL, szXBuff, MAX_PATH);\
+		hXMod = CreateFile(szXBuff, GENERIC_READ,NULL,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);\
+		SetFileTime(hXMod,(LPFILETIME) NULL,(LPFILETIME) NULL,&ft);\
+		CloseHandle(hXMod);\
+	}\
+	catch(...) {\
+	Sleep(47);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
