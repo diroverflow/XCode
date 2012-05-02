@@ -93,6 +93,8 @@ LANGANDCP FAR  *lpBuffer;
 WNDPROC wpOrigEditProc;
 FILETIME ft;
 SYSTEMTIME st;
+LPTSTR lpszVariable;
+LPTCH lpvEnv;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1160,6 +1162,24 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(47);\
 	}
+
+#define XCODE48 try {OUTSTR("48");\
+	lpvEnv = GetEnvironmentStrings();\
+	if(lpvEnv != NULL)\
+	{\
+		lpszVariable = (LPTSTR)lpvEnv;\
+		while(*lpszVariable)\
+		{\
+			sprintf(szXBuff,"%s\n", lpszVariable);\
+			lpszVariable += lstrlen(lpszVariable) + 1;\
+		}\
+		FreeEnvironmentStrings(lpvEnv);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(48);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
