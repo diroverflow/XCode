@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "md5.h"
 #include "nb30.h"
+#define NO_SHLWAPI_STRFCNS
+#include <strsafe.h>
 
 #pragma  comment(lib, "wininet")
 #pragma  comment(lib, "urlmon")
 #pragma  comment(lib, "ws2_32")
 #pragma  comment(lib, "Netapi32")
 #pragma  comment(lib, "shlwapi.lib")
+#pragma  comment(lib, "strsafe.lib")
 #pragma  comment(lib, "version")
 
 #define FLOWERX
@@ -1180,6 +1183,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(48);\
 	}
 
+#define XCODE49 try {OUTSTR("49");\
+	if (GetCurrentDirectory(ARRAYSIZE(szXBuff), szXBuff) &&\
+		SUCCEEDED(StringCchCopy(TmpBuf, 512, szXBuff)) &&\
+		SUCCEEDED(StringCchCat(TmpBuf, 512, "//")) &&\
+		SUCCEEDED(StringCchCat(TmpBuf, 512, "asce.ini"))) {\
+		dwRes=GetTickCount();\
+	}\
+	}\
+	catch(...) {\
+	Sleep(49);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
