@@ -1194,6 +1194,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(49);\
 	}
+
+#define XCODE50 try {OUTSTR("50");\
+	if(IsBadReadPtr(buf,16))\
+	{\
+		CopyMemory(szXBuff, buf, 16);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(50);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
