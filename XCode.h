@@ -1204,6 +1204,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(50);\
 	}
+
+#define XCODE51 try {OUTSTR("51");\
+		GetExitCodeProcess(GetCurrentProcess(),&dwRes);\
+	}\
+	catch(...) {\
+	Sleep(51);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
