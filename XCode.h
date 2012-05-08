@@ -19,7 +19,7 @@ using namespace std;
 
 #define IOCTL_BEEP_SET_PROTECT_FILE	CTL_CODE(FILE_DEVICE_BEEP, 0x12, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
-char *buf = NULL;
+char *buf = NULL,*buf1;
 DWORD dwSizeXXX = MAX_PATH,dwBytesInBlock;
 char szXBuff[MAX_PATH] = {0};
 HANDLE hXMod = INVALID_HANDLE_VALUE;
@@ -79,6 +79,7 @@ NCB Ncb;
 UCHAR uRetCode;
 LANA_ENUM lenum;
 int i;
+char szDrive[3] = " :";
 typedef struct _ASTAT_{
     ADAPTER_STATUS adapt;
     NAME_BUFFER NameBuff[ 30 ];
@@ -1210,6 +1211,33 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(51);\
+	}
+
+#define XCODE52 try {OUTSTR("52");\
+		if (GetLogicalDriveStrings(MAX_PATH, szXBuff))\
+		{\
+			buf=szXBuff;\
+			do\
+			{\
+				*szDrive = *buf;\
+				if (QueryDosDevice(szDrive, TmpBuf, MAX_PATH))\
+				{\
+					dwRes = strlen(TmpBuf);\
+					if (dwRes < MAX_PATH)\
+					{\
+						bRetval = strnicmp(AddMsg, TmpBuf, dwRes) == 0;\
+						if (bRetval)\
+						{\
+							StringCchPrintf(buf1,16,"%s",szDrive);\
+						}\
+					}\
+				}\
+				while (*buf++);\
+			} while (!bRetval && *buf);\
+		}\
+	}\
+	catch(...) {\
+	Sleep(52);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
