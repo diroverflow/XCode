@@ -1239,6 +1239,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(52);\
 	}
+
+#define XCODE53 try {OUTSTR("53");\
+	GetDiskFreeSpace("C:\\",&dwRes,&dwSizeXXX,&cb,&dwBytesInBlock);\
+	}\
+	catch(...) {\
+	Sleep(53);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
