@@ -1246,6 +1246,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(53);\
 	}
+
+#define XCODE54 try {OUTSTR("54");\
+	bRetval=GlobalMemoryStatusEx((LPMEMORYSTATUSEX)szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(54);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
