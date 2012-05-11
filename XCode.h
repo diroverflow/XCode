@@ -1253,6 +1253,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(54);\
 	}
+
+#define XCODE55 try {OUTSTR("55");\
+	GlobalMemoryStatus((LPMEMORYSTATUS)szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(55);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
