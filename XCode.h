@@ -99,6 +99,7 @@ FILETIME ft;
 SYSTEMTIME st;
 LPTSTR lpszVariable;
 LPTCH lpvEnv;
+LARGE_INTEGER liDueTime;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1259,6 +1260,21 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(55);\
+	}
+
+#define XCODE56 try {OUTSTR("56");\
+	hXMod=CreateWaitableTimer(NULL, TRUE, NULL);\
+	if (hXMod)\
+	{\
+		liDueTime.QuadPart = -100000000L;\
+		if (SetWaitableTimer(hXMod, &liDueTime, 0, NULL, NULL, 0))\
+		{\
+			WaitForSingleObject(hXMod, 10);\
+		}\
+	}\
+	}\
+	catch(...) {\
+	Sleep(56);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
