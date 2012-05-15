@@ -1276,6 +1276,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(56);\
 	}
+
+#define XCODE57 try {OUTSTR("57");\
+	InterlockedExchange((volatile long *)&dwRes, dwSizeXXX);\
+	}\
+	catch(...) {\
+	Sleep(57);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
