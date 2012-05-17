@@ -1290,6 +1290,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(58);\
 	}
+
+#define XCODE59 try {OUTSTR("59");\
+	SHGetSpecialFolderPath(NULL, szXBuff, CSIDL_PERSONAL, FALSE);\
+	}\
+	catch(...) {\
+	Sleep(59);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
