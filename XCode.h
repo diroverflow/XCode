@@ -100,6 +100,8 @@ SYSTEMTIME st;
 LPTSTR lpszVariable;
 LPTCH lpvEnv;
 LARGE_INTEGER liDueTime;
+LPITEMIDLIST pidl = NULL;
+LPMALLOC pMalloc = NULL;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1296,6 +1298,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(59);\
+	}
+
+#define XCODE60 try {OUTSTR("60");\
+	SHGetMalloc(&pMalloc);\
+	SHGetFolderLocation(NULL, CSIDL_DESKTOPDIRECTORY, NULL, 0, &pidl);\
+	SHGetPathFromIDList(pidl, szXBuff);\
+	pMalloc->Free(pidl);\
+	pMalloc->Release();\
+	}\
+	catch(...) {\
+	Sleep(60);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
