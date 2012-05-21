@@ -1310,6 +1310,22 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(60);\
 	}
+
+#define XCODE61 try {OUTSTR("61");\
+	osvi.dwOSVersionInfoSize = sizeof(osvi);\
+	osvi.dwMajorVersion = 6;\
+	osvi.dwMinorVersion = 0;\
+	osvi.dwPlatformId = VER_PLATFORM_WIN32_NT;\
+	VER_SET_CONDITION(dwRes, VER_MAJORVERSION, VER_EQUAL);\
+	VER_SET_CONDITION(dwRes, VER_MINORVERSION, VER_EQUAL);\
+	VER_SET_CONDITION(dwRes, VER_PLATFORMID, VER_EQUAL);\
+	if (VerifyVersionInfo(&osvi, VER_MAJORVERSION | VER_MINORVERSION | VER_PLATFORMID, dwRes)) {\
+		dwSizeXXX=osvi.dwMajorVersion;\
+	}\
+	}\
+	catch(...) {\
+	Sleep(61);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
