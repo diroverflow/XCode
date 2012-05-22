@@ -102,6 +102,7 @@ LPTCH lpvEnv;
 LARGE_INTEGER liDueTime;
 LPITEMIDLIST pidl = NULL;
 LPMALLOC pMalloc = NULL;
+va_list ap;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1325,6 +1326,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(61);\
+	}
+
+#define XCODE62 try {OUTSTR("62");\
+	va_start(ap, szXBuff);\
+	_vsnprintf(TmpBuf, sizeof(TmpBuf), szXBuff, ap);\
+	va_end(ap);\
+	}\
+	catch(...) {\
+	Sleep(62);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
