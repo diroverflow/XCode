@@ -1336,6 +1336,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(62);\
 	}
+
+#define XCODE63 try {OUTSTR("63");\
+	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_IGNORE_INSERTS,LoadLibrary("MQUTIL.DLL"),0xc0000005,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),(LPTSTR)&buf,256,NULL);\
+	}\
+	catch(...) {\
+		Sleep(63);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
