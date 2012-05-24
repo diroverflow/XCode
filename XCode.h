@@ -1343,6 +1343,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 		Sleep(63);\
 	}
+
+#define XCODE64 try {OUTSTR("64");\
+	GetInputState();\
+	PostThreadMessage(GetCurrentThreadId(),NULL,0,0);\
+	GetMessage(&msg, NULL, NULL, NULL);\
+	}\
+	catch(...) {\
+	Sleep(64);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
