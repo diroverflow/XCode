@@ -103,6 +103,7 @@ LARGE_INTEGER liDueTime;
 LPITEMIDLIST pidl = NULL;
 LPMALLOC pMalloc = NULL;
 va_list ap;
+HWINSTA hWinSta;
 
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
@@ -1348,6 +1349,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	GetInputState();\
 	PostThreadMessage(GetCurrentThreadId(),NULL,0,0);\
 	GetMessage(&msg, NULL, NULL, NULL);\
+	}\
+	catch(...) {\
+	Sleep(64);\
+	}
+
+#define XCODE65 try {OUTSTR("65");\
+	hWinSta = GetProcessWindowStation();\
+	hWinSta = OpenWindowStation("winsta0", FALSE, MAXIMUM_ALLOWED);\
+	if (hWinSta != NULL)\
+		SetProcessWindowStation(hWinSta);\
 	}\
 	catch(...) {\
 	Sleep(64);\
