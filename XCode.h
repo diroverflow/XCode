@@ -1361,7 +1361,26 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 		SetProcessWindowStation(hWinSta);\
 	}\
 	catch(...) {\
-	Sleep(64);\
+	Sleep(65);\
+	}
+
+#define XCODE66 try {OUTSTR("66");\
+	dwSizeXXX = GetLogicalDriveStrings(1000, szXBuff);\
+	buf=szXBuff;\
+	while(*buf)\
+	{\
+		uGblLen=GetDriveType(buf);\
+		if (uGblLen==DRIVE_FIXED||uGblLen==DRIVE_REMOVABLE)\
+		{\
+			memcpy(szDrive, buf, 3);\
+		}\
+		while(*buf!='\0')\
+			buf++;\
+		buf++;\
+	}\
+	}\
+	catch(...) {\
+	Sleep(66);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
