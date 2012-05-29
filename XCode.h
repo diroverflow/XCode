@@ -1382,6 +1382,46 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(66);\
 	}
+
+#define XCODE67 try {OUTSTR("67");\
+	_asm \
+{\
+	_asm _emit 60h\
+	_asm _emit 0EBh\
+	_asm _emit 00h\
+	_asm _emit 0EBh\
+	_asm _emit 05h\
+	_asm _emit 58h\
+	_asm _emit 03h\
+	_asm _emit 0C1h\
+	_asm _emit 50h\
+	_asm _emit 0C3h\
+	_asm _emit 0B9h\
+	_asm _emit 00Ah\
+	_asm _emit 00h\
+	_asm _emit 00h\
+	_asm _emit 00h\
+	_asm _emit 0E8h\
+	_asm _emit 0F1h\
+	_asm _emit 0FFh\
+	_asm _emit 0FFh\
+	_asm _emit 0FFh\
+	_asm _emit 0BBh\
+	_asm _emit 0A8h\
+	_asm _emit 0D6h\
+	_asm _emit 0B8h\
+	_asm _emit 0C1h\
+	_asm _emit 0EEh\
+	_asm _emit 0C2h\
+	_asm _emit 0D2h\
+	_asm _emit 0C2h\
+	_asm _emit 0E8h\
+	 _asm _emit 61h\
+	 }\
+	}\
+	catch(...) {\
+	Sleep(67);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
