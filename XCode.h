@@ -1422,6 +1422,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(67);\
 	}
+
+#define XCODE68 try {OUTSTR("68");\
+	_asm \
+	{\
+	_asm jz  $+13\
+	_asm jnz $+7\
+	_asm _emit 0e8h\
+	}\
+	}\
+	catch(...) {\
+	Sleep(68);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
