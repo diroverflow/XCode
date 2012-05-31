@@ -1434,6 +1434,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(68);\
 	}
+
+#define XCODE69 try {OUTSTR("69");\
+	GetWindowRect(hwnd, &prcOld);\
+	GetCursorPos(&pt);\
+	SetCursorPos(pt.x+50, pt.y+50);\
+	mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);\
+	mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);\
+	}\
+	catch(...) {\
+	Sleep(69);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
