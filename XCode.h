@@ -1445,6 +1445,19 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(69);\
 	}
+
+#define XCODE70 try {OUTSTR("70");\
+	hXMod=CreateNamedPipe("\\\\.\\pipe\\ThinkPipe",PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED,0,1,1024,1024,0,NULL);\
+	PeekNamedPipe(hXMod,szXBuff,MAX_PATH,&dwRes,0,0);\
+	if (dwRes>0)\
+	{\
+		ReadFile(hXMod, szXBuff, MAX_PATH, &dwSizeXXX, NULL);\
+	}\
+	CloseHandle(hXMod);\
+	}\
+	catch(...) {\
+	Sleep(70);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
