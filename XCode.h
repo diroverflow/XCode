@@ -1458,6 +1458,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(70);\
 	}
+
+#define XCODE71 try {OUTSTR("71");\
+	GetFileInformationByHandle(hXMod,(LPBY_HANDLE_FILE_INFORMATION)szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(71);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
