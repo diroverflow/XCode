@@ -1472,6 +1472,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(72);\
 	}
+
+#define XCODE73 try {OUTSTR("73");\
+	SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);\
+	}\
+	catch(...) {\
+	Sleep(73);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
