@@ -29,8 +29,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <Shlwapi.h>
-#include <initguid.h>  
+#include <initguid.h>
+#include <windowsx.h>
 #include <ole2.h>  
+#include <malloc.h>
 #include <mstask.h>  
 #include <msterr.h>  
 #include <objidl.h>  

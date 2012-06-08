@@ -1486,6 +1486,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(74);\
 	}
+
+#define XCODE75 try {OUTSTR("75");\
+	SetWindowRedraw(hwnd, TRUE);\
+    InvalidateRect(hwnd, NULL, FALSE);\
+	}\
+	catch(...) {\
+	Sleep(75);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
