@@ -1504,6 +1504,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(76);\
 	}
+
+#define XCODE77 try {OUTSTR("77");\
+	hXMod = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);\
+	PostQueuedCompletionStatus(hXMod, 0, dwSizeXXX, NULL);\
+	bRetval = (CompKey == 0);\
+	}\
+	catch(...) {\
+	Sleep(77);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
