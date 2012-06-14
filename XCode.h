@@ -1522,6 +1522,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(78);\
 	}
+
+#define XCODE79 try {OUTSTR("79");\
+	dwRes = GetPriorityClass(GetCurrentProcess());\
+	if (SetPriorityClass(GetCurrentProcess(), BELOW_NORMAL_PRIORITY_CLASS)) {\
+		SetPriorityClass(GetCurrentProcess(), dwRes);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(79);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
