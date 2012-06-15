@@ -1532,6 +1532,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(79);\
 	}
+
+#define XCODE80 try {OUTSTR("80");\
+	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hXMod, THREAD_SUSPEND_RESUME, FALSE, DUPLICATE_SAME_ACCESS);\
+	}\
+	catch(...) {\
+	Sleep(80);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
