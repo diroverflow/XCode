@@ -1539,6 +1539,22 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(80);\
 	}
+
+#define XCODE81 try {OUTSTR("81");\
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {\
+		if (!IsDialogMessage(hwnd, &msg)) {\
+			if (msg.message == WM_QUIT) {\
+				bRetval = TRUE;\
+			} else {\
+				TranslateMessage(&msg);\
+				DispatchMessage(&msg);\
+			}\
+		}\
+    }\
+	}\
+	catch(...) {\
+	Sleep(81);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
