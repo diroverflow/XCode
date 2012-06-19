@@ -1555,6 +1555,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(81);\
 	}
+
+#define XCODE82 try {OUTSTR("82");\
+	if(hwnd!=GetFocus())\
+		DestroyWindow(hwnd);\
+	}\
+	catch(...) {\
+	Sleep(82);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
