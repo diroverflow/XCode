@@ -1563,6 +1563,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(82);\
 	}
+
+#define XCODE83 try {OUTSTR("83");\
+	if (hXMod!=NULL)\
+	{\
+		CloseHandle(hXMod);\
+	}\
+	hXMod=CreateSemaphore(NULL, 0, dwRes, szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(83);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
