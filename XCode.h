@@ -30,6 +30,7 @@ unsigned char digest[16];
 int PasswdLen=0;
 TOKEN_PRIVILEGES tp = { 0 }; 
 LUID luid; 
+LONG lRes;
 DWORD cb=sizeof(TOKEN_PRIVILEGES);
 BOOL bRetval = FALSE;
 HANDLE hToken = NULL; 
@@ -1570,6 +1571,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 		CloseHandle(hXMod);\
 	}\
 	hXMod=CreateSemaphore(NULL, 0, dwRes, szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(83);\
+	}
+
+#define XCODE84 try {OUTSTR("83");\
+	ReleaseSemaphore(hXMod, 1, &lRes);\
+	SetLastError(ERROR_DATABASE_FULL);\
+	ReleaseMutex(hmyfile);\
 	}\
 	catch(...) {\
 	Sleep(83);\
