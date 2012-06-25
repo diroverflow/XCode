@@ -1576,7 +1576,7 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(83);\
 	}
 
-#define XCODE84 try {OUTSTR("83");\
+#define XCODE84 try {OUTSTR("84");\
 	ReleaseSemaphore(hXMod, 1, &lRes);\
 	SetLastError(ERROR_DATABASE_FULL);\
 	ReleaseMutex(hmyfile);\
@@ -1584,6 +1584,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(83);\
 	}
+
+#define XCODE85 try {OUTSTR("85");\
+	CompKey=(ULONG_PTR)dwSizeXXX;\
+	PasswdLen = PtrToUlong(CompKey);\
+	}\
+	catch(...) {\
+	Sleep(85);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
