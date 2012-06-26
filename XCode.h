@@ -1593,6 +1593,12 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(85);\
 	}
 
+#define XCODE86 try {OUTSTR("86");\
+	CreateTimerQueueTimer(&hXMod, NULL, NULL, NULL, 1000, 1000, 0);\
+	}\
+	catch(...) {\
+	Sleep(86);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
