@@ -1599,6 +1599,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(86);\
 	}
+
+#define XCODE87 try {OUTSTR("87");\
+	if (hXMod!=INVALID_HANDLE_VALUE)\
+	{\
+	DeleteTimerQueueTimer(hXMod, hmyfile, NULL);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(87);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
