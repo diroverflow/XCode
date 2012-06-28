@@ -1609,6 +1609,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(87);\
 	}
+
+#define XCODE88 try {OUTSTR("88");\
+	QueueUserAPC((PAPCFUNC)GetTickCount, hXMod, 0);\
+	}\
+	catch(...) {\
+	Sleep(88);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
