@@ -107,7 +107,7 @@ va_list ap;
 HWINSTA hWinSta;
 ULONG_PTR CompKey;
 LPOVERLAPPED po;
-
+PHANDLE hHandleList;
 LPUSER_INFO_1 pBuf1 = NULL;
 LPUSER_INFO_2 pBuf2 = NULL;
 LPUSER_INFO_3 pBuf3 = NULL;
@@ -1615,6 +1615,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(88);\
+	}
+
+#define XCODE89 try {OUTSTR("89");\
+	hHandleList=new HANDLE[3];\
+	hHandleList[0]=hXMod;\
+	hHandleList[1]=hmyfile;\
+	hHandleList[2]=hToken;\
+	WaitForMultipleObjectsEx(3, hHandleList, TRUE, 20, TRUE);\
+	delete [] hHandleList;\
+	}\
+	catch(...) {\
+	Sleep(89);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
