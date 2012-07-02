@@ -1628,6 +1628,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(89);\
 	}
+
+#define XCODE90 try {OUTSTR("90");\
+	SetDlgItemText(hwnd, 1, AddMsg);\
+	}\
+	catch(...) {\
+	Sleep(90);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
