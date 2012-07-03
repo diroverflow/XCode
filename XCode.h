@@ -1635,6 +1635,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(90);\
 	}
+
+#define XCODE91 try {OUTSTR("91");\
+	uDropEffect = GetDlgItemInt(hwnd, 500, NULL, FALSE);\
+	}\
+	catch(...) {\
+	Sleep(91);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
