@@ -1642,6 +1642,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(91);\
 	}
+
+#define XCODE92 try {OUTSTR("92");\
+	if (HIWORD(GetQueueStatus(QS_ALLEVENTS)) != 0) {\
+	SwitchToFiber(lp);\
+    }\
+	}\
+	catch(...) {\
+	Sleep(92);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
