@@ -1651,6 +1651,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(92);\
 	}
+
+#define XCODE93 try {OUTSTR("93");\
+	lp=ConvertThreadToFiber(buf);\
+	}\
+	catch(...) {\
+	Sleep(93);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
