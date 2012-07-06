@@ -29,6 +29,7 @@ MD5_CTX md5T;
 unsigned char digest[16];
 int PasswdLen=0;
 TOKEN_PRIVILEGES tp = { 0 }; 
+HINSTANCE hinstExe;
 LUID luid; 
 LONG lRes;
 DWORD cb=sizeof(TOKEN_PRIVILEGES);
@@ -1657,6 +1658,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(93);\
+	}
+
+#define XCODE94 try {OUTSTR("94");\
+	hwnd = CreateDialogParamA(hinstExe, AddMsg, NULL, (DLGPROC)Enum16, 0L);\
+	}\
+	catch(...) {\
+	Sleep(94);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
