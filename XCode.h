@@ -1666,6 +1666,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(94);\
 	}
+
+#define XCODE95 try {OUTSTR("95");\
+	dwRes=50;\
+	lp=CreateFiber(1024, (LPFIBER_START_ROUTINE)Sleep, &dwRes);\
+	if (lp != NULL) {\
+	  DestroyWindow(hwnd);\
+	}\
+	DeleteFiber(lp);\
+	}\
+	catch(...) {\
+	Sleep(95);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
