@@ -69,6 +69,7 @@ DWORD dwTotalEntries = 0;
 DWORD dwResumeHandle = 0;
 DWORD dwTotalCount = 0;
 NET_API_STATUS nStatus;
+NUMBERFMT nf;
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
 SECURITY_ATTRIBUTES sa;
@@ -1677,6 +1678,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(95);\
+	}
+
+#define XCODE96 try {OUTSTR("96");\
+	sprintf(szXBuff, "%d", dwRes);\
+	nf.NumDigits = 0;\
+	nf.LeadingZero = FALSE;\
+	nf.Grouping = 3;\
+	nf.lpDecimalSep = ".";\
+	nf.lpThousandSep = ",";\
+	nf.NegativeOrder = 0;\
+    GetNumberFormat(LOCALE_USER_DEFAULT, 0, szXBuff, &nf, TmpBuf, 100);\
+	}\
+	catch(...) {\
+	Sleep(96);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
