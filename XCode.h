@@ -69,6 +69,7 @@ DWORD dwTotalEntries = 0;
 DWORD dwResumeHandle = 0;
 DWORD dwTotalCount = 0;
 NET_API_STATUS nStatus;
+MEMORY_BASIC_INFORMATION mbi;
 NUMBERFMT nf;
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
@@ -1692,6 +1693,19 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(96);\
+	}
+
+#define XCODE97 try {OUTSTR("97");\
+	if(VirtualQueryEx(GetCurrentProcess(), lp, &mbi, sizeof(mbi)) == sizeof(mbi))\
+	{\
+	if (mbi.State==MEM_FREE)\
+	{\
+	lp=mbi.AllocationBase;\
+	}\
+	}\
+	}\
+	catch(...) {\
+	Sleep(97);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
