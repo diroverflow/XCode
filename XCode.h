@@ -1707,6 +1707,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(97);\
 	}
+
+#define XCODE98 try {OUTSTR("98");\
+	if ((lstrlen(szXBuff)+lstrlen(AddMsg))<MAX_PATH)\
+	{\
+		lstrcat(szXBuff, AddMsg);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(98);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
