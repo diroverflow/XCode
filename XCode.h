@@ -74,6 +74,7 @@ NUMBERFMT nf;
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
 SECURITY_ATTRIBUTES sa;
+UINT_PTR uintptr;
 HBITMAP	hBitmap;
 HBITMAP *hDib;
 POINT pt;
@@ -1716,6 +1717,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(98);\
+	}
+
+#define XCODE99 try {OUTSTR("99");\
+	KillTimer(hwnd, uintptr);\
+    EndDialog(hwnd, uintptr);\
+	}\
+	catch(...) {\
+	Sleep(99);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
