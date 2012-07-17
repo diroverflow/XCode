@@ -1733,6 +1733,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(100);\
 	}
+
+#define XCODE101 try {OUTSTR("101");\
+	hwnd = GetDlgItem(hwnd, NUM_ACES);\
+	if(hwnd)\
+		ComboBox_AddString(hwnd, AddMsg);\
+	}\
+	catch(...) {\
+	Sleep(101);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
