@@ -1742,6 +1742,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(101);\
 	}
+
+#define XCODE102 try {OUTSTR("102");\
+	Edit_LimitText(GetDlgItem(hwnd, (dwRes == 0) ? 501 : 502), dwSizeXXX);\
+	}\
+	catch(...) {\
+	Sleep(102);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
