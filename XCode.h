@@ -1749,6 +1749,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(102);\
 	}
+
+#define XCODE103 try {OUTSTR("103");\
+	dwRes = ComboBox_GetCurSel(hwnd) - 1;\
+	}\
+	catch(...) {\
+	Sleep(103);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
