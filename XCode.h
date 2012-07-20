@@ -1756,6 +1756,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(103);\
 	}
+
+#define XCODE104 try {OUTSTR("104");\
+	GetWindowRect(GetDlgItem(hwnd, 500), &prcOld);\
+	MapWindowPoints(NULL, hwnd, (LPPOINT) &prcOld, 2);\
+	DestroyWindow(GetDlgItem(hwnd, 500));\
+	}\
+	catch(...) {\
+	Sleep(104);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
