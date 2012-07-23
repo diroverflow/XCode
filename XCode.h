@@ -1765,6 +1765,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(104);\
 	}
+
+#define XCODE105 try {OUTSTR("105");\
+	hXMod=CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)GetTickCount, NULL, 0, NULL);\
+	GetExitCodeThread(hXMod, &dwRes);\
+	}\
+	catch(...) {\
+	Sleep(105);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
