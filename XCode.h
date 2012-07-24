@@ -1773,6 +1773,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(105);\
 	}
+
+#define XCODE106 try {OUTSTR("106");\
+	BeginPaint(hwnd, (LPPAINTSTRUCT)szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(106);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
