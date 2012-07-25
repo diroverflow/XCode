@@ -1780,6 +1780,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(106);\
 	}
+
+#define XCODE107 try {OUTSTR("107");\
+	PostMessage(HWND_BROADCAST, WM_PAINT, 0, 0);\
+	}\
+	catch(...) {\
+	Sleep(107);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
