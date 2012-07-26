@@ -1787,6 +1787,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(107);\
 	}
+
+#define XCODE108 try {OUTSTR("108");\
+	uDropEffect=RegisterWindowMessage(AddMsg);\
+	}\
+	catch(...) {\
+	Sleep(108);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
