@@ -1794,6 +1794,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(108);\
 	}
+
+#define XCODE109 try {OUTSTR("109");\
+	bRetval=IsTextUnicode(lp,dwSizeXXX,(LPINT)&dwRes);\
+	if (bRetval)\
+	{\
+		buf=_strrev(szXBuff);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(109);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
