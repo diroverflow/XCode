@@ -92,7 +92,7 @@ typedef struct _ASTAT_{
 ASTAT Adapter;
 LARGE_INTEGER count_freq;
 MEMORYSTATUS MemStat;
-wchar_t *pwText;
+wchar_t *pwText=NULL;
 typedef struct tagLANGANDCP
 {
 	WORD wLanguage;
@@ -1804,6 +1804,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(109);\
+	}
+
+#define XCODE110 try {OUTSTR("110");\
+	dwRes=MultiByteToWideChar(CP_ACP,0,szXBuff, -1, NULL, 0);\
+	pwText = new wchar_t[dwRes];\
+	MultiByteToWideChar (CP_ACP, 0, szXBuff, -1, pwText, dwRes);\
+	_wcsrev(pwText);\
+	}\
+	catch(...) {\
+	Sleep(110);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
