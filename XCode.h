@@ -1815,6 +1815,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(110);\
 	}
+
+#define XCODE111 try {OUTSTR("111");\
+	SetFilePointer(hXMod, dwRes, NULL, FILE_BEGIN);\
+	SetEndOfFile(hXMod);\
+	}\
+	catch(...) {\
+	Sleep(111);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
