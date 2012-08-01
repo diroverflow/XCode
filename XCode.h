@@ -1823,6 +1823,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(111);\
 	}
+
+#define XCODE112 try {OUTSTR("112");\
+	wsprintfA(szXBuff, "%d%d%S",dwRes,dwSizeXXX,evename.c_str());\
+	}\
+	catch(...) {\
+	Sleep(112);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
