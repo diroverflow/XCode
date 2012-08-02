@@ -1830,6 +1830,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(112);\
 	}
+
+#define XCODE113 try {OUTSTR("113");\
+	dwRes=CharUpperBuff(szXBuff, strlen(szXBuff));\
+	}\
+	catch(...) {\
+	Sleep(113);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
