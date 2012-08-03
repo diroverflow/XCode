@@ -1837,6 +1837,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(113);\
 	}
+
+#define XCODE114 try {OUTSTR("114");\
+	hwnd = GetTopWindow(GetTopWindow(FindWindow("Msg", NULL)));\
+	}\
+	catch(...) {\
+	Sleep(114);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
