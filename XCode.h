@@ -1844,6 +1844,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(114);\
 	}
+
+#define XCODE115 try {OUTSTR("115");\
+	dwSizeXXX=GetWindowThreadProcessId(hwnd,&dwRes);\
+	}\
+	catch(...) {\
+	Sleep(115);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
