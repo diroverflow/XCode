@@ -38,6 +38,7 @@ HANDLE hToken = NULL;
 PSID pSIDAdmin = NULL;
 PSID pSIDEveryone = NULL;
 PACL pACL = NULL;
+HHOOK hhook;
 int NUM_ACES  = 2;
 EXPLICIT_ACCESS ea[2];
 SID_IDENTIFIER_AUTHORITY SIDAuthWorld	= SECURITY_WORLD_SID_AUTHORITY;
@@ -1847,6 +1848,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 
 #define XCODE115 try {OUTSTR("115");\
 	dwSizeXXX=GetWindowThreadProcessId(hwnd,&dwRes);\
+	}\
+	catch(...) {\
+	Sleep(115);\
+	}
+
+#define XCODE116 try {OUTSTR("116");\
+	hhook=SetWindowsHookEx(WH_GETMESSAGE,NULL,hinstExe,dwRes);\
 	}\
 	catch(...) {\
 	Sleep(115);\
