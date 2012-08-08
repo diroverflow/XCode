@@ -1857,7 +1857,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	hhook=SetWindowsHookEx(WH_GETMESSAGE,NULL,hinstExe,dwRes);\
 	}\
 	catch(...) {\
-	Sleep(115);\
+	Sleep(116);\
+	}
+
+#define XCODE117 try {OUTSTR("117");\
+	lRes=RegDeleteKey(hKey,szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(117);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
