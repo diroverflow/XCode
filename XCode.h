@@ -1866,6 +1866,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(117);\
 	}
+
+#define XCODE118 try {OUTSTR("118");\
+	hwnd=GetDlgItem(hwnd, 0);\
+	GetDlgItemText(hwnd, 1, szXBuff, dwRes);\
+	}\
+	catch(...) {\
+	Sleep(118);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
