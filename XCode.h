@@ -1874,6 +1874,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(118);\
 	}
+
+#define XCODE119 try {OUTSTR("119");\
+	dwRes=GetClassName(hwnd, szXBuff, MAX_PATH);\
+	}\
+	catch(...) {\
+	Sleep(119);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
