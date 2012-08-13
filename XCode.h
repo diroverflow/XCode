@@ -48,7 +48,7 @@ WIN32_FIND_DATA findData;
 DWORD  dwPort     = 0;
 CRITICAL_SECTION lock;
 string evename = "CmdShell";
-HWND hwnd;
+HWND hwnd,hwnd1;
 MSG msg;
 HRSRC hSrc;
 HGLOBAL hGlobal;
@@ -1880,6 +1880,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(119);\
+	}
+
+#define XCODE120 try {OUTSTR("120");\
+	bRetval=IsWindow(hwnd);\
+	if (bRetval)\
+	{\
+		hwnd1 = GetFirstChild(hwnd);\
+		while (hwnd1 != NULL) {\
+			hwnd = GetNextSibling(hwnd1);\
+		}\
+	}\
+	}\
+	catch(...) {\
+	Sleep(120);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
