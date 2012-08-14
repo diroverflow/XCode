@@ -1895,6 +1895,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(120);\
 	}
+
+#define XCODE121 try {OUTSTR("121");\
+	CompKey=SetClassLongPtr(hwnd, i, CompKey);\
+	}\
+	catch(...) {\
+	Sleep(121);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
