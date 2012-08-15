@@ -1902,6 +1902,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(121);\
 	}
+
+#define XCODE122 try {OUTSTR("122");\
+	bRetval=AttachThreadInput(dwRes,dwSizeXXX,bRetval);\
+	}\
+	catch(...) {\
+	Sleep(122);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
