@@ -1916,6 +1916,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(123);\
 	}
+
+#define XCODE124 try {OUTSTR("124");\
+	dwRes=SetRect(&prcOld, 0, 0, GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);\
+	bRetval=ClipCursor(&prcOld);\
+	}\
+	catch(...) {\
+	Sleep(124);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
