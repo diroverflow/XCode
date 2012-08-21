@@ -1932,6 +1932,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(125);\
 	}
+
+#define XCODE126 try {OUTSTR("126");\
+	hwnd=GetActiveWindow();\
+	hwnd=SetCapture(hwnd);\
+	}\
+	catch(...) {\
+	Sleep(126);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
