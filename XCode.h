@@ -1940,6 +1940,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(126);\
 	}
+
+#define XCODE127 try {OUTSTR("127");\
+	bRetval=ClientToScreen(hwnd,&pt);\
+	}\
+	catch(...) {\
+	Sleep(127);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
