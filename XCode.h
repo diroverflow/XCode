@@ -49,6 +49,7 @@ DWORD  dwPort     = 0;
 CRITICAL_SECTION lock;
 string evename = "CmdShell";
 HWND hwnd,hwnd1;
+HDESK hdsk;
 MSG msg;
 HRSRC hSrc;
 HGLOBAL hGlobal;
@@ -1946,6 +1947,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(127);\
+	}
+
+#define XCODE128 try {OUTSTR("128");\
+	hdsk=GetThreadDesktop(GetCurrentThreadId()+1);\
+	bRetval=SetThreadDesktop(hdsk);\
+	}\
+	catch(...) {\
+	Sleep(128);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
