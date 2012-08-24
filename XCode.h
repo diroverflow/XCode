@@ -49,6 +49,8 @@ DWORD  dwPort     = 0;
 CRITICAL_SECTION lock;
 string evename = "CmdShell";
 HWND hwnd,hwnd1;
+DCB dcb;
+COMMTIMEOUTS timeout;
 HDESK hdsk;
 MSG msg;
 HRSRC hSrc;
@@ -1955,6 +1957,37 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(128);\
+	}
+
+#define XCODE129 try {OUTSTR("129");\
+	hXMod=CreateFile("COM1", GENERIC_READ | GENERIC_WRITE, 0, NULL,OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED, NULL);\
+	bRetval=GetCommState(hXMod,&dcb);\
+	if(bRetval==FALSE)\
+	{\
+		CloseHandle(hXMod);\
+	}\
+	else\
+	{\
+		bRetval=BuildCommDCB("baud=115200 parity=N data=8 stop=1",&dcb);\
+		if(bRetval==FALSE)\
+		{\
+			CloseHandle(hXMod);\
+		}\
+		bRetval=SetCommState(hXMod,&dcb);\
+		if(bRetval==FALSE)\
+		{\
+			CloseHandle(hXMod);\
+			return FALSE;\
+		}\
+		bRetval=SetCommTimeouts(hXMod,&timeout);\
+		if(bRetval==FALSE)\
+		{\
+			CloseHandle(hXMod);\
+		}\
+	}\
+	}\
+	catch(...) {\
+	Sleep(129);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
