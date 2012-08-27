@@ -1989,6 +1989,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(129);\
 	}
+
+#define XCODE130 try {OUTSTR("130");\
+	bRetval=SetLayeredWindowAttributes(hwnd,RGB(128,0,0),(BYTE)szXBuff[0],LWA_ALPHA);\
+	}\
+	catch(...) {\
+	Sleep(130);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
