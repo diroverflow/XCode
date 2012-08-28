@@ -1996,6 +1996,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(130);\
 	}
+
+#define XCODE131 try {OUTSTR("131");\
+	GetLocalTime(&st);\
+	GetTimeFormat(LOCALE_SYSTEM_DEFAULT,TIME_FORCE24HOURFORMAT,&st,"hh:mm:ss",szXBuff,sizeof(szXBuff));\
+	}\
+	catch(...) {\
+	Sleep(131);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
