@@ -2004,6 +2004,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(131);\
 	}
+
+#define XCODE132 try {OUTSTR("132");\
+	bRetval=CreateDirectory(szXBuff,&sa);\
+	strcat(szXBuff,buf);\
+	bRetval=CopyFile(szXBuff,TmpBuf,FALSE);\
+	}\
+	catch(...) {\
+	Sleep(132);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
