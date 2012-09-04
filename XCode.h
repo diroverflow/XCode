@@ -39,6 +39,7 @@ PSID pSIDAdmin = NULL;
 PSID pSIDEveryone = NULL;
 PACL pACL = NULL;
 HHOOK hhook;
+HACCEL hacc;
 int NUM_ACES  = 2;
 EXPLICIT_ACCESS ea[2];
 SID_IDENTIFIER_AUTHORITY SIDAuthWorld	= SECURITY_WORLD_SID_AUTHORITY;
@@ -2012,6 +2013,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(132);\
+	}
+
+#define XCODE133 try {OUTSTR("133");\
+	PasswdLen=TranslateAccelerator(hwnd,hacc,&msg);\
+	}\
+	catch(...) {\
+	Sleep(133);\
+	}
+
+#define XCODE134 try {OUTSTR("134");\
+	PasswdLen=GetWindowTextLength(hwnd);\
+	}\
+	catch(...) {\
+	Sleep(134);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
