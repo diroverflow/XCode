@@ -30,6 +30,7 @@ unsigned char digest[16];
 int PasswdLen=0;
 TOKEN_PRIVILEGES tp = { 0 }; 
 HINSTANCE hinstExe;
+PAINTSTRUCT ps;
 LUID luid; 
 LONG lRes;
 DWORD cb=sizeof(TOKEN_PRIVILEGES);
@@ -2027,6 +2028,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(134);\
+	}
+
+#define XCODE135 try {OUTSTR("135");\
+	GetClientRect(hwnd, &prcOld);\
+	DrawText(hdc, szXBuff, strlen(szXBuff), &prcOld, DT_CENTER);\
+	EndPaint(hwnd, &ps);\
+	}\
+	catch(...) {\
+	Sleep(135);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
