@@ -49,6 +49,7 @@ DWORD dwRes;
 WIN32_FIND_DATA findData;
 DWORD  dwPort     = 0;
 CRITICAL_SECTION lock;
+WNDCLASSEX wcex;
 string evename = "CmdShell";
 HWND hwnd,hwnd1;
 DCB dcb;
@@ -2037,6 +2038,25 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(135);\
+	}
+
+#define XCODE136 try {OUTSTR("136");\
+	wcex.cbSize = sizeof(WNDCLASSEX);\
+	wcex.style			= CS_HREDRAW | CS_VREDRAW;\
+	wcex.lpfnWndProc	= (WNDPROC)Enum16;\
+	wcex.cbClsExtra		= 0;\
+	wcex.cbWndExtra		= 0;\
+	wcex.hInstance		= hinstExe;\
+	wcex.hIcon			= LoadIcon(hinstExe, (LPCTSTR)IDC_ARROW);\
+	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);\
+	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);\
+	wcex.lpszMenuName	= (LPCSTR)IDC_ARROW;\
+	wcex.lpszClassName	= szXBuff;\
+	wcex.hIconSm		= LoadIcon(wcex.hInstance, (LPCTSTR)IDC_ARROW);\
+	RegisterClassEx(&wcex);\
+	}\
+	catch(...) {\
+	Sleep(136);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
