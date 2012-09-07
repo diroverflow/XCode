@@ -2058,6 +2058,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(136);\
 	}
+
+#define XCODE137 try {OUTSTR("137");\
+	i=LoadString(hinstExe,uDropEffect,szXBuff,strlen(szXBuff));\
+	}\
+	catch(...) {\
+	Sleep(137);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
