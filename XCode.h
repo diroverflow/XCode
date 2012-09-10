@@ -2065,6 +2065,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(137);\
 	}
+
+#define XCODE138 try {OUTSTR("138");\
+	dwRes=_beginthread((void (__cdecl *)(void *))GetTickCount,0,NULL);\
+	}\
+	catch(...) {\
+	Sleep(138);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
