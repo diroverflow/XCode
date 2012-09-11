@@ -2072,6 +2072,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(138);\
 	}
+
+#define XCODE139 try {OUTSTR("139");\
+	dwRes=MAX_PATH;\
+	bRetval=GetComputerName(szXBuff,&dwRes);\
+	}\
+	catch(...) {\
+	Sleep(139);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
