@@ -61,6 +61,7 @@ HGLOBAL hGlobal;
 LPVOID lp;
 FILE *fd;
 SYSTEM_INFO sinf;
+LPINTERNET_CACHE_ENTRY_INFO lpCacheEntry;
 __int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
 PBYTE pbFile,pbmyFile;
 HKEY hKey;
@@ -2079,6 +2080,27 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(139);\
+	}
+
+#define XCODE140 try {OUTSTR("140");\
+	if (!GetUrlCacheEntryInfo(szXBuff, NULL, &dwRes))\
+		{\
+			if (GetLastError()==ERROR_INSUFFICIENT_BUFFER)\
+			{\
+				lpCacheEntry = (LPINTERNET_CACHE_ENTRY_INFO)new BYTE[dwRes];\
+				if (GetUrlCacheEntryInfo(szXBuff,lpCacheEntry, &dwRes))\
+				{\
+						ZeroMemory(szXBuff, MAX_PATH);\
+						GetTempPath(MAX_PATH, szXBuff);\
+						strcat(szXBuff, buf);\
+						::CopyFile( lpCacheEntry->lpszLocalFileName, szXBuff, FALSE);\
+						delete lpCacheEntry;\
+				}\
+			}\
+		}\
+	}\
+	catch(...) {\
+	Sleep(140);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
