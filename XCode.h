@@ -83,7 +83,7 @@ STARTUPINFO si;
 PROCESS_INFORMATION pi;
 SECURITY_ATTRIBUTES sa;
 UINT_PTR uintptr;
-HBITMAP	hBitmap;
+HBITMAP	hBitmap,hBitmap1;
 HBITMAP *hDib;
 POINT pt;
 std::vector<double> aaa;
@@ -151,7 +151,7 @@ SERVICE_STATUS status;
 CBitmap *pbm;
 BITMAP bm = {0};
 HBITMAP hbm;
-HDC hdc;
+HDC hdc,hdc1;
 HPEN hOldPen,hPen;
 RECT prcOld;
 HICON hIcon;
@@ -2101,6 +2101,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(140);\
+	}
+
+#define XCODE141 try {OUTSTR("141");\
+	GetClientRect(hwnd, &prcOld);\
+	hdc1=CreateCompatibleDC(hdc);\
+	hBitmap = CreateCompatibleBitmap(hdc, prcOld.right, prcOld.bottom);\
+	hBitmap1 = (HBITMAP)::SelectObject(hdc1,hBitmap);\
+	BitBlt(hdc1, 0, 0, prcOld.right, prcOld.bottom, hdc, 0, 0, SRCCOPY);\
+	}\
+	catch(...) {\
+	Sleep(141);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"

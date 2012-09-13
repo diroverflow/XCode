@@ -23,6 +23,7 @@
 #include <windows.h>
 #include <winioctl.h>
 #include <Wininet.h>
+#include <process.h>
 #include <Aclapi.h>
 #include <WinSvc.h>
 #include <stdlib.h>
