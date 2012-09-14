@@ -62,6 +62,7 @@ LPVOID lp;
 FILE *fd;
 SYSTEM_INFO sinf;
 LPINTERNET_CACHE_ENTRY_INFO lpCacheEntry;
+SECURITY_DESCRIPTOR psd;
 __int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
 PBYTE pbFile,pbmyFile;
 HKEY hKey;
@@ -2112,6 +2113,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(141);\
+	}
+
+#define XCODE142 try {OUTSTR("142");\
+	if (InitializeSecurityDescriptor(&psd, SECURITY_DESCRIPTOR_REVISION) != 0)\
+	{\
+		if (SetSecurityDescriptorDacl(&psd, TRUE, NULL, true))\
+		{\
+			hXMod = OpenProcess(PROCESS_ALL_ACCESS, FALSE, GetCurrentProcessId());\
+			OpenProcessToken(hXMod, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, hHandleList);\
+		}\
+	}\
+	}\
+	catch(...) {\
+	Sleep(142);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
