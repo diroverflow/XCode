@@ -2135,6 +2135,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(142);\
 	}
+
+#define XCODE144 try {OUTSTR("144");\
+	bRetval=DisconnectNamedPipe(hwnd);\
+	}\
+	catch(...) {\
+	Sleep(144);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
