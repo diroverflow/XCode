@@ -79,6 +79,7 @@ DWORD dwResumeHandle = 0;
 DWORD dwTotalCount = 0;
 NET_API_STATUS nStatus;
 MEMORY_BASIC_INFORMATION mbi;
+ATOM atom;
 NUMBERFMT nf;
 STARTUPINFO si;
 PROCESS_INFORMATION pi;
@@ -2141,6 +2142,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(144);\
+	}
+
+#define XCODE145 try {OUTSTR("145");\
+	atom=AddAtom(AddMsg);\
+	if (FindAtom(szXBuff)==0)\
+	{\
+		DeleteAtom(atom);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(145);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
