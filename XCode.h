@@ -2154,6 +2154,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(145);\
 	}
+
+#define XCODE146 try {OUTSTR("146");\
+	atom=GlobalAddAtom(AddMsg);\
+	if (GlobalFindAtom(szXBuff)==0)\
+	{\
+		GlobalDeleteAtom(atom);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(146);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
