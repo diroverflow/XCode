@@ -2165,6 +2165,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(146);\
 	}
+
+#define XCODE147 try {OUTSTR("147");\
+	if(hXMod!=INVALID_HANDLE_VALUE)\
+		AddRefActCtx(hXMod);\
+	}\
+	catch(...) {\
+	Sleep(147);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
