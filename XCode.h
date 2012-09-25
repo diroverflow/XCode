@@ -2173,6 +2173,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(147);\
 	}
+
+#define XCODE148 try {OUTSTR("148");\
+	lp=AddVectoredContinueHandler(dwRes,(PVECTORED_EXCEPTION_HANDLER)GetTickCount);\
+	}\
+	catch(...) {\
+	Sleep(148);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
