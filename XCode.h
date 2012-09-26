@@ -2180,6 +2180,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(148);\
 	}
+
+#define XCODE149 try {OUTSTR("149");\
+	bRetval=AllocateUserPhysicalPages(hXMod, &CompKey, &CompKey);\
+	}\
+	catch(...) {\
+	Sleep(149);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
