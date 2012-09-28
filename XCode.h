@@ -2194,6 +2194,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(150);\
 	}
+
+#define XCODE151 try {OUTSTR("151");\
+	bRetval=AreFileApisANSI();\
+	}\
+	catch(...) {\
+	Sleep(151);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
