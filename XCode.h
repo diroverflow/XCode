@@ -2201,6 +2201,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(151);\
 	}
+
+#define XCODE152 try {OUTSTR("152");\
+	if(bRetval)\
+	bRetval=AssignProcessToJobObject(hXMod,hmyfile);\
+	}\
+	catch(...) {\
+	Sleep(152);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
