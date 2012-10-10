@@ -34,7 +34,7 @@ PAINTSTRUCT ps;
 LUID luid; 
 LONG lRes;
 DWORD cb=sizeof(TOKEN_PRIVILEGES);
-BOOL bRetval = FALSE;
+BOOL bRetval = FALSE, bVal;
 HANDLE hToken = NULL; 
 PSID pSIDAdmin = NULL;
 PSID pSIDEveryone = NULL;
@@ -2216,6 +2216,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(153);\
+	}
+
+#define XCODE154 try {OUTSTR("154");\
+	if(bRetval)\
+	bRetval=BackupRead(hXMod,(LPBYTE)szXBuff,dwRes,&dwSizeXXX,bRetval,bVal,&lp);\
+	}\
+	catch(...) {\
+	Sleep(154);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
