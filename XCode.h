@@ -2225,6 +2225,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(154);\
 	}
+
+#define XCODE155 try {OUTSTR("155");\
+	if(bRetval)\
+	bRetval=BackupSeek(hXMod,dwRes,dwSizeXXX,(LPDWORD)dwBytesInBlock,(LPDWORD)dwPort,&lp);\
+	}\
+	catch(...) {\
+	Sleep(155);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
