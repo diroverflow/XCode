@@ -2228,10 +2228,18 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 
 #define XCODE155 try {OUTSTR("155");\
 	if(bRetval)\
-	bRetval=BackupSeek(hXMod,dwRes,dwSizeXXX,(LPDWORD)dwBytesInBlock,(LPDWORD)dwPort,&lp);\
+	bRetval=BackupSeek(hXMod,dwRes,dwSizeXXX,&dwBytesInBlock,&dwPort,&lp);\
 	}\
 	catch(...) {\
 	Sleep(155);\
+	}
+
+#define XCODE156 try {OUTSTR("156");\
+	if(bRetval)\
+	bRetval=BackupWrite(hXMod,(LPBYTE)szXBuff,dwRes,&dwSizeXXX,bVal,bRetval,&lp);\
+	}\
+	catch(...) {\
+	Sleep(156);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
