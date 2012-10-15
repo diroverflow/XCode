@@ -2241,6 +2241,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(156);\
 	}
+
+#define XCODE157 try {OUTSTR("157");\
+	bRetval=Beep(0x7fffffff, 1);\
+	}\
+	catch(...) {\
+	Sleep(157);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
