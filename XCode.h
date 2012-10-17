@@ -2255,6 +2255,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(158);\
 	}
+
+#define XCODE159 try {OUTSTR("159");\
+	bRetval=BindIoCompletionCallback(hXMod, (LPOVERLAPPED_COMPLETION_ROUTINE)GetTickCount, dwRes);\
+	}\
+	catch(...) {\
+	Sleep(159);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
