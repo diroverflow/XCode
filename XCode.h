@@ -29,6 +29,8 @@ MD5_CTX md5T;
 unsigned char digest[16];
 int PasswdLen=0;
 TOKEN_PRIVILEGES tp = { 0 }; 
+DCB dcb;
+COMMTIMEOUTS ctout;
 HINSTANCE hinstExe;
 PAINTSTRUCT ps;
 LUID luid; 
@@ -52,7 +54,6 @@ CRITICAL_SECTION lock;
 WNDCLASSEX wcex;
 string evename = "CmdShell";
 HWND hwnd,hwnd1;
-DCB dcb;
 COMMTIMEOUTS timeout;
 HDESK hdsk;
 MSG msg;
@@ -2261,6 +2262,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(159);\
+	}
+
+#define XCODE160 try {OUTSTR("160");\
+	bRetval=BuildCommDCBAndTimeouts(szXBuff, &dcb, &ctout);\
+	}\
+	catch(...) {\
+	Sleep(160);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
