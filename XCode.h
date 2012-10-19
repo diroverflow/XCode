@@ -2270,6 +2270,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(160);\
 	}
+
+#define XCODE161 try {OUTSTR("161");\
+	bRetval=CallNamedPipe(szXBuff, buf, dwRes, TmpBuf, dwSizeXXX, &dwBytesInBlock, cb);\
+	}\
+	catch(...) {\
+	Sleep(161);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
