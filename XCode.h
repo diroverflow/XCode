@@ -2282,7 +2282,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	bRetval=CancelDeviceWakeupRequest(hXMod);\
 	}\
 	catch(...) {\
-	Sleep(161);\
+	Sleep(162);\
+	}
+
+#define XCODE163 try {OUTSTR("163");\
+	bRetval=CancelIo(hXMod);\
+	}\
+	catch(...) {\
+	Sleep(163);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
