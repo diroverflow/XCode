@@ -2305,6 +2305,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(165);\
 	}
+
+#define XCODE166 try {OUTSTR("166");\
+	bRetval=ChangeTimerQueueTimer(hXMod,hmyfile,dwRes,dwSizeXXX);\
+	}\
+	catch(...) {\
+	Sleep(166);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
