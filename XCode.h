@@ -195,6 +195,7 @@ SYSTEM_TIME_INFORMATION        SysTimeInfo;
 SYSTEM_BASIC_INFORMATION       SysBaseInfo;
 typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
 typedef BOOL (WINAPI *CHECKD8)(LPCTSTR,LPSTR,DWORD,PBOOL,PBOOL);
+typedef BOOL (WINAPI *CRDP)(HANDLE,PBOOL);
 PROCNTQSI NtQuerySystemInformation;
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -2323,6 +2324,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(167);\
+	}
+
+#define XCODE168 try {OUTSTR("168");\
+	pFunc=GetProcAddress(LoadLibrary("kernel32.dll"),"CheckRemoteDebuggerPresent");\
+	if(pFunc) {\
+		bRetval=((CRDP)pFunc)(hXMod,&bVal);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(168);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
