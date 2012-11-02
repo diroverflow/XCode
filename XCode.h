@@ -2335,6 +2335,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(168);\
 	}
+
+#define XCODE169 try {OUTSTR("169");\
+	if(bRetval) {\
+	bRetval=ClearCommBreak(hXMod);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(169);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
