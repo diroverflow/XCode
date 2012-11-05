@@ -29,6 +29,7 @@ MD5_CTX md5T;
 unsigned char digest[16];
 int PasswdLen=0;
 TOKEN_PRIVILEGES tp = { 0 }; 
+COMSTAT cstat;
 DCB dcb;
 COMMTIMEOUTS ctout;
 HINSTANCE hinstExe;
@@ -2343,6 +2344,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(169);\
+	}
+
+#define XCODE170 try {OUTSTR("170");\
+	if(bRetval) {\
+	bRetval=ClearCommError(hXMod,&dwRes,&cstat);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(170);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
