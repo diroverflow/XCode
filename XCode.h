@@ -113,7 +113,7 @@ typedef struct tagLANGANDCP
 } LANGANDCP;
 LANGANDCP FAR  *lpBuffer;
 WNDPROC wpOrigEditProc;
-FILETIME ft;
+FILETIME ft,ft1;
 SYSTEMTIME st;
 LPTSTR lpszVariable;
 LPTCH lpvEnv;
@@ -2353,6 +2353,15 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(170);\
+	}
+
+#define XCODE171 try {OUTSTR("171");\
+	if(bRetval) {\
+	dwRes=CompareFileTime(&ft, &ft1);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(171);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
