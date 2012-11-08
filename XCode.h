@@ -33,6 +33,7 @@ COMSTAT cstat;
 DCB dcb;
 COMMTIMEOUTS ctout;
 HINSTANCE hinstExe;
+LCID lcid;
 PAINTSTRUCT ps;
 LUID luid; 
 LONG lRes;
@@ -2362,6 +2363,21 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(171);\
+	}
+
+#define XCODE172 try {OUTSTR("172");\
+	dwRes=CompareString(lcid,cb,szXBuff,dwSizeXXX,AddMsg,PasswdLen);\
+	}\
+	catch(...) {\
+	Sleep(172);\
+	}
+
+#define XCODE173 try {OUTSTR("173");\
+	if(hXMod)\
+	bRetval=ConnectNamedPipe(hXMod,po);\
+	}\
+	catch(...) {\
+	Sleep(173);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
