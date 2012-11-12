@@ -2387,6 +2387,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(174);\
 	}
+
+#define XCODE175 try {OUTSTR("175");\
+	if(bRetval)\
+	lcid=ConvertDefaultLocale(lcid);\
+	}\
+	catch(...) {\
+	Sleep(175);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
