@@ -31,7 +31,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	}
 	else
 	{
-		XCODE170
+		XCODE176
 	}
 
 	return nRetCode;

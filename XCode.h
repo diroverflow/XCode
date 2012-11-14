@@ -2395,6 +2395,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(175);\
 	}
+
+#define XCODE176 try {OUTSTR("176");\
+	if(bRetval)\
+	bRetval=ConvertFiberToThread();\
+	}\
+	catch(...) {\
+	Sleep(176);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
