@@ -24,6 +24,7 @@ DWORD dwSizeXXX = MAX_PATH,dwBytesInBlock;
 char szXBuff[MAX_PATH] = {0};
 HANDLE hXMod = INVALID_HANDLE_VALUE;
 HANDLE hmyfile,hFileMapping,hmyfilemap;
+PCACTCTX pcact;
 char TmpBuf[512];
 MD5_CTX md5T;
 unsigned char digest[16];
@@ -2418,6 +2419,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(178);\
+	}
+
+#define XCODE179 try {OUTSTR("179");\
+	hXMod=CreateActCtx(pcact);\
+	}\
+	catch(...) {\
+	Sleep(179);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
