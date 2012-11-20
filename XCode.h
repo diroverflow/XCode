@@ -2427,6 +2427,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(179);\
 	}
+
+#define XCODE180 try {OUTSTR("180");\
+	hXMod=CreateConsoleScreenBuffer(dwRes,dwSizeXXX,(const struct _SECURITY_ATTRIBUTES *)&psd,dwPort,lp);\
+	}\
+	catch(...) {\
+	Sleep(180);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
