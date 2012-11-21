@@ -67,6 +67,7 @@ FILE *fd;
 SYSTEM_INFO sinf;
 LPINTERNET_CACHE_ENTRY_INFO lpCacheEntry;
 SECURITY_DESCRIPTOR psd;
+SECURITY_ATTRIBUTES psa;
 __int64 qwFileSize,myFilesize,qwFileOffset,qwmyFileOffset;
 PBYTE pbFile,pbmyFile;
 FARPROC pFunc;
@@ -2429,10 +2430,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}
 
 #define XCODE180 try {OUTSTR("180");\
-	hXMod=CreateConsoleScreenBuffer(dwRes,dwSizeXXX,(const struct _SECURITY_ATTRIBUTES *)&psd,dwPort,lp);\
+	hXMod=CreateConsoleScreenBuffer(dwRes,dwSizeXXX,&psa,dwPort,lp);\
 	}\
 	catch(...) {\
 	Sleep(180);\
+	}
+
+#define XCODE181 try {OUTSTR("181");\
+	bRetval=CreateDirectoryEx(szXBuff,TmpBuf,&psa);\
+	}\
+	catch(...) {\
+	Sleep(181);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
