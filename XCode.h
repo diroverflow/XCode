@@ -2455,6 +2455,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(182);\
 	}
+
+#define XCODE183 try {OUTSTR("183");\
+	hXMod=CreateJobObject(&psa,szXBuff);\
+	}\
+	catch(...) {\
+	Sleep(183);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
