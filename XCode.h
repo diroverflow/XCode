@@ -2462,6 +2462,20 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(183);\
 	}
+
+#define XCODE184 try {OUTSTR("184");\
+	bRetval=CreateJobSet(dwRes,(PJOB_SET_ARRAY)szXBuff,dwSizeXXX);\
+	}\
+	catch(...) {\
+	Sleep(184);\
+	}
+
+#define XCODE185 try {OUTSTR("185");\
+	hXMod=CreateMailslot(szXBuff,dwRes,dwSizeXXX,&psa);\
+	}\
+	catch(...) {\
+	Sleep(185);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
