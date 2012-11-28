@@ -200,6 +200,7 @@ SYSTEM_BASIC_INFORMATION       SysBaseInfo;
 typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
 typedef BOOL (WINAPI *CHECKD8)(LPCTSTR,LPSTR,DWORD,PBOOL,PBOOL);
 typedef BOOL (WINAPI *CRDP)(HANDLE,PBOOL);
+typedef HANDLE (WINAPI *CMRN)(BOOL);
 PROCNTQSI NtQuerySystemInformation;
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -2475,6 +2476,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(185);\
+	}
+
+#define XCODE186 try {OUTSTR("186");\
+	pFunc=GetProcAddress(LoadLibrary("kernel32.dll"),"CreateMemoryResourceNotification");\
+	if(pFunc) {\
+	hXMod=((CMRN)pFunc)(bRetval);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(186);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
