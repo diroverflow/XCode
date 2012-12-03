@@ -2509,6 +2509,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(188);\
 	}
+
+#define XCODE189 try {OUTSTR("189");\
+	bRetval=CreateProcessAsUser(hXMod,szXBuff,AddMsg,&psa,&psa,bVal,dwRes,lp,TmpBuf,&si, &pi);\
+	}\
+	catch(...) {\
+	Sleep(189);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
