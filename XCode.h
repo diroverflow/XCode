@@ -2516,6 +2516,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(189);\
 	}
+
+#define XCODE190 try {OUTSTR("190");\
+	hXMod=OpenProcess(dwRes,bRetval,dwSizeXXX);\
+	hXMod=CreateRemoteThread(hXMod,&psa,dwRes,(LPTHREAD_START_ROUTINE)GetTickCount,lp,dwSizeXXX,&dwPort);\
+	}\
+	catch(...) {\
+	Sleep(190);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
