@@ -203,6 +203,7 @@ typedef BOOL (WINAPI *CRDP)(HANDLE,PBOOL);
 typedef HANDLE (WINAPI *CMRN)(BOOL);
 typedef HANDLE (WINAPI *CME)(LPSECURITY_ATTRIBUTES,LPCTSTR,DWORD,DWORD);
 typedef HANDLE (WINAPI *CPN)(LPSECURITY_ATTRIBUTES,LPVOID,LPCTSTR);
+typedef BOOL (WINAPI *CSL)(LPCWSTR,LPCWSTR,DWORD);
 PROCNTQSI NtQuerySystemInformation;
 typedef BOOL (CALLBACK *PROCENUMPROC)(DWORD, WORD, LPSTR, LPARAM);
 typedef struct {
@@ -2524,6 +2525,17 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(190);\
 	}
+
+#define XCODE191 try {OUTSTR("191");\
+	pFunc=GetProcAddress(LoadLibrary("kernel32.dll"),"CreateSymbolicLinkA");\
+	if(pFunc) {\
+	bRetval=((CSL)pFunc)((wchar_t*)szXBuff,pwText,dwRes);\
+	}\
+	}\
+	catch(...) {\
+	Sleep(191);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
