@@ -2536,6 +2536,13 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(191);\
 	}
 
+#define XCODE192 try {OUTSTR("192");\
+	dwRes=CreateTapePartition(hXMod,dwSizeXXX,dwPort,dwRes);\
+	}\
+	catch(...) {\
+	Sleep(192);\
+	}
+
 #ifdef FLOWERX
 #include "xrand.h"
 #else
