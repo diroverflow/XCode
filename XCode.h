@@ -2543,6 +2543,12 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	Sleep(192);\
 	}
 
+#define XCODE193 try {OUTSTR("193");\
+	hXMod=CreateTimerQueue();\
+	}\
+	catch(...) {\
+	Sleep(193);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
