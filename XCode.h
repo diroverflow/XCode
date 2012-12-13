@@ -2549,6 +2549,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(193);\
 	}
+
+#define XCODE194 try {OUTSTR("194");\
+	if(bRetval)\
+	bRetval=DeactivateActCtx(dwRes,CompKey);\
+	}\
+	catch(...) {\
+	Sleep(194);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
