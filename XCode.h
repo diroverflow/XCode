@@ -2565,6 +2565,14 @@ if(GetLastError()==ERROR_ALREADY_EXISTS)\
 	catch(...) {\
 	Sleep(195);\
 	}
+
+#define XCODE196 try {OUTSTR("196");\
+	if(bRetval)\
+	bRetval=DebugActiveProcessStop(dwRes);\
+	}\
+	catch(...) {\
+	Sleep(196);\
+	}
 #ifdef FLOWERX
 #include "xrand.h"
 #else
